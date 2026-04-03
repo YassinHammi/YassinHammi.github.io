@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Rec deck — ISS Meridian</title>
     <link rel="stylesheet" href="ship-pages.css">
     <style>
@@ -92,6 +92,27 @@
         .btn:disabled {
             opacity: 0.45;
             cursor: not-allowed;
+        }
+
+        @media (max-width: 480px) {
+            .games-deck {
+                gap: 0.75rem;
+            }
+
+            .btn {
+                min-height: 44px;
+                padding: 0.5rem 0.95rem;
+                touch-action: manipulation;
+            }
+
+            .rx-pad {
+                min-height: 120px;
+                touch-action: manipulation;
+            }
+
+            .sig-input {
+                font-size: 16px;
+            }
         }
 
         /* Reaction */

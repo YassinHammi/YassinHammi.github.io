@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Memory bank — ISS Meridian</title>
     <link rel="stylesheet" href="ship-pages.css">
     <style>
@@ -67,6 +67,7 @@
                 inset 0 1px 0 rgba(255, 248, 220, 0.06);
             cursor: default;
             outline: none;
+            touch-action: manipulation;
             transition:
                 transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.45s ease,
@@ -110,13 +111,15 @@
             }
         }
 
-        .gal-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: rgba(232, 197, 110, 0.45);
-            box-shadow:
-                0 14px 40px rgba(25, 18, 12, 0.55),
-                0 0 0 1px rgba(201, 169, 98, 0.15),
-                inset 0 1px 0 rgba(255, 248, 220, 0.1);
+        @media (hover: hover) and (pointer: fine) {
+            .gal-card:hover {
+                transform: translateY(-5px) scale(1.02);
+                border-color: rgba(232, 197, 110, 0.45);
+                box-shadow:
+                    0 14px 40px rgba(25, 18, 12, 0.55),
+                    0 0 0 1px rgba(201, 169, 98, 0.15),
+                    inset 0 1px 0 rgba(255, 248, 220, 0.1);
+            }
         }
 
         .gal-card:focus-visible {
@@ -668,6 +671,33 @@
         body.ship-page.ship-page--gallery[data-theme="light"]::-webkit-scrollbar-corner,
         body.ship-page.ship-page--gallery[data-theme="light"] *::-webkit-scrollbar-corner {
             background: rgba(238, 226, 208, 0.92);
+        }
+
+        @media (max-width: 420px) {
+            .gal-main {
+                max-width: 100%;
+            }
+
+            .gal-grid {
+                grid-template-columns: repeat(auto-fill, minmax(min(100%, 142px), 1fr));
+                gap: 0.5rem;
+            }
+
+            .gal-index-line {
+                font-size: 0.52rem;
+                padding: 0.45rem 0.55rem;
+                gap: 0.35rem 0.65rem;
+            }
+
+            .gal-card__meta {
+                font-size: 0.44rem;
+                padding: 0.12rem 0.3rem;
+            }
+
+            .gal-card__cap {
+                font-size: 0.5rem;
+                padding: 0.38rem 0.45rem 0.32rem;
+            }
         }
     </style>
 </head>

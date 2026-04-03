@@ -5,6 +5,7 @@
 html {
     height: 100%;
     overflow: hidden;
+    -webkit-text-size-adjust: 100%;
 }
 
 body.codex-home {
@@ -13,6 +14,7 @@ body.codex-home {
     max-height: 100dvh;
     min-height: 100dvh;
     overflow: hidden;
+    -webkit-tap-highlight-color: rgba(92, 61, 30, 0.12);
     display: flex;
     flex-direction: column;
     font-family: "Cormorant Garamond", Georgia, serif;
@@ -434,8 +436,39 @@ header .latin-tag {
 }
 
 @media (max-width: 600px) {
-    .planet-link span { font-size: 7px; letter-spacing: 0.1em; }
-    .header-ornaments { letter-spacing: 1.8em; padding-left: 1.8em; }
+    .planet-link span {
+        font-size: 7px;
+        letter-spacing: 0.1em;
+    }
+
+    .header-ornaments {
+        letter-spacing: 1.8em;
+        padding-left: 1.8em;
+    }
+
+    .stage-wrap {
+        padding-left: max(0.35rem, env(safe-area-inset-left, 0px));
+        padding-right: max(0.35rem, env(safe-area-inset-right, 0px));
+    }
+
+    .planet-link {
+        touch-action: manipulation;
+    }
+
+    .ship-to-bridge {
+        min-height: 44px;
+        padding: 0.45rem 0.65rem;
+        display: inline-flex;
+        align-items: center;
+        touch-action: manipulation;
+    }
+}
+
+@media (max-width: 380px) {
+    header h1 {
+        letter-spacing: 0.22em;
+        font-size: clamp(1.1rem, 7vw, 1.65rem);
+    }
 }
 
 @view-transition {
@@ -468,8 +501,8 @@ header .latin-tag {
 
 .ship-to-bridge {
     position: fixed;
-    bottom: max(var(--sheet-inset-y), 0.5rem);
-    left: max(var(--sheet-inset-x), 0.5rem);
+    bottom: max(var(--sheet-inset-y), env(safe-area-inset-bottom, 0px), 0.5rem);
+    left: max(var(--sheet-inset-x), env(safe-area-inset-left, 0px), 0.5rem);
     z-index: 40;
     padding: 0.3rem 0.55rem;
     font-family: system-ui, sans-serif;

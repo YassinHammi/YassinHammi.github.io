@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Ship’s registry — ISS Meridian</title>
     <link rel="stylesheet" href="ship-pages.css">
     <style>
@@ -11,8 +11,30 @@
         }
 
         .auth-main {
-            max-width: 26rem;
+            max-width: min(26rem, 100%);
             margin: 0 auto;
+            padding-left: env(safe-area-inset-left, 0px);
+            padding-right: env(safe-area-inset-right, 0px);
+        }
+
+        @media (max-width: 480px) {
+            .auth-tabs button {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+
+            .auth-field input[type="text"],
+            .auth-field input[type="email"],
+            .auth-field input[type="password"] {
+                font-size: 16px;
+                min-height: 44px;
+            }
+
+            .auth-submit,
+            .auth-nav a {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
         }
 
         .auth-tabs {
