@@ -1,5 +1,5 @@
-/* Shared styles for pages shown inside the bridge iframe */
-@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap");
+/* Shared “codex” styling for iframe pages — matches home.html Roman/Greek chart tone */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap");
 
 *,
 *::before,
@@ -9,60 +9,191 @@
 
 html {
     height: 100%;
+    background-color: #16110d;
 }
 
 body.ship-page {
+    position: relative;
+    isolation: isolate;
     margin: 0;
     min-height: 100%;
-    padding: clamp(0.75rem, 2.5vw, 1.25rem);
-    font-family: "Share Tech Mono", ui-monospace, monospace;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #a8e0d8;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 80, 90, 0.25) 0%, transparent 55%),
-        linear-gradient(180deg, #0a1218 0%, #060c10 100%);
+    min-height: 100dvh;
+    padding: clamp(0.65rem, 2vw, 1.1rem) clamp(0.65rem, 2.5vw, 1.25rem);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(0.92rem, 1.05vw + 0.82rem, 1.05rem);
+    line-height: 1.48;
+    color: #d8c9ae;
+    background-color: #16110d;
+    background-image:
+        radial-gradient(ellipse 130% 95% at 50% -18%, rgba(255, 215, 160, 0.1) 0%, transparent 52%),
+        radial-gradient(ellipse 90% 70% at 100% 40%, rgba(90, 70, 50, 0.1) 0%, transparent 45%),
+        radial-gradient(ellipse 70% 55% at 0% 85%, rgba(50, 65, 85, 0.07) 0%, transparent 42%),
+        linear-gradient(
+            172deg,
+            #32261a 0%,
+            #2a1f16 18%,
+            #231a12 42%,
+            #1c1510 68%,
+            #18120e 100%
+        );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-body.ship-page h1 {
+/* Inner “sheet” edge like the home codex */
+body.ship-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 1px;
+    box-shadow:
+        inset 0 0 0 1px rgba(201, 169, 98, 0.18),
+        inset 0 1px 0 rgba(255, 248, 235, 0.04),
+        inset 0 0 60px rgba(0, 0, 0, 0.25);
+}
+
+body.ship-page > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Classical page title block (optional wrapper in HTML) */
+.ship-page-header {
+    text-align: center;
+    margin-bottom: clamp(0.85rem, 2vh, 1.35rem);
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ship-page-ornaments {
+    font-family: Cinzel, serif;
+    color: rgba(201, 169, 98, 0.28);
+    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    letter-spacing: 2.2em;
+    margin: 0 0 0.2rem;
+    padding-left: 2.2em;
+    line-height: 1;
+}
+
+.ship-page-header h1 {
     margin: 0 0 0.35rem;
-    font-family: "Orbitron", sans-serif;
-    font-size: clamp(1rem, 2.8vw, 1.25rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: Cinzel, serif;
+    font-weight: 600;
+    font-size: clamp(1.15rem, 2.8vw, 1.65rem);
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: #5eead4;
+    color: #c9a962;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.ship-page-rule {
+    width: min(280px, 72%);
+    height: 2px;
+    margin: 0.4rem auto 0.45rem;
+    border: none;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.5), transparent);
+}
+
+body.ship-page .ship-page-header .ship-page-lede {
+    margin: 0 auto 0;
+    font-size: clamp(0.88rem, 1.6vw, 1.05rem);
+    font-style: italic;
+    color: rgba(200, 185, 158, 0.82);
+    max-width: 32em;
+    line-height: 1.42;
+}
+
+.ship-page-tag {
+    display: block;
+    font-family: Cinzel, serif;
+    font-size: clamp(0.62rem, 1.4vw, 0.78rem);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(201, 169, 98, 0.42);
+    margin-top: 0.45rem;
+    font-style: normal;
+}
+
+/* Standalone h1 when no header wrapper (backward compat) */
+body.ship-page > h1:first-child {
+    margin: 0 0 0.35rem;
+    font-family: Cinzel, serif;
+    font-weight: 600;
+    font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #c9a962;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+body.ship-page > h1:first-child + .ship-page-lede {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body.ship-page .ship-page-lede {
     margin: 0 0 1.25rem;
-    font-size: 0.78rem;
-    color: rgba(160, 210, 200, 0.65);
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(200, 185, 158, 0.78);
     max-width: 42rem;
 }
 
 body.ship-page a {
-    color: #7dd3fc;
+    color: #d4b878;
+    text-underline-offset: 2px;
 }
 
 body.ship-page a:hover {
-    color: #bae6fd;
+    color: #e8c56e;
 }
 
 /* Theme from bridge toggle */
 body.ship-page[data-theme="light"] {
-    color: #4a3520;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(195, 155, 95, 0.18) 0%, transparent 55%),
-        linear-gradient(180deg, #f6efe1 0%, #eadfc9 100%);
+    color: #3d2914;
+    background-color: #e8dcc8;
+    background-image:
+        radial-gradient(ellipse 120% 90% at 50% -12%, rgba(255, 252, 240, 0.9) 0%, transparent 50%),
+        radial-gradient(ellipse 85% 65% at 95% 35%, rgba(220, 190, 150, 0.35) 0%, transparent 48%),
+        radial-gradient(ellipse 75% 55% at 5% 80%, rgba(200, 215, 230, 0.2) 0%, transparent 45%),
+        linear-gradient(168deg, #fdf9f2 0%, #f5ebda 35%, #eadfce 68%, #e2d2c0 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-body.ship-page[data-theme="light"] h1 {
-    color: #8b5e2b;
+body.ship-page[data-theme="light"]::before {
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        inset 0 0 50px rgba(92, 61, 30, 0.06);
 }
 
+body.ship-page[data-theme="light"] .ship-page-ornaments {
+    color: rgba(92, 61, 30, 0.32);
+}
+
+body.ship-page[data-theme="light"] .ship-page-header h1,
+body.ship-page[data-theme="light"] > h1:first-child {
+    color: #5c3d1e;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+body.ship-page[data-theme="light"] .ship-page-rule {
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.65), transparent);
+}
+
+body.ship-page[data-theme="light"] .ship-page-header .ship-page-lede,
 body.ship-page[data-theme="light"] .ship-page-lede {
-    color: rgba(90, 70, 46, 0.72);
+    color: rgba(74, 56, 36, 0.85);
+}
+
+body.ship-page[data-theme="light"] .ship-page-tag {
+    color: rgba(92, 61, 30, 0.5);
 }
 
 body.ship-page[data-theme="light"] a {
@@ -70,5 +201,58 @@ body.ship-page[data-theme="light"] a {
 }
 
 body.ship-page[data-theme="light"] a:hover {
-    color: #5a3712;
+    color: #5c3d1e;
+}
+
+/* Scrollbars — codex tones inside iframe */
+body.ship-page * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 169, 98, 0.55) rgba(30, 22, 16, 0.8);
+}
+
+body.ship-page *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+body.ship-page *::-webkit-scrollbar-track {
+    background: rgba(24, 18, 12, 0.65);
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.1);
+}
+
+body.ship-page *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(190, 155, 88, 0.85), rgba(75, 55, 32, 0.8));
+    border-radius: 5px;
+    border: 2px solid rgba(18, 14, 10, 0.45);
+}
+
+body.ship-page *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(220, 190, 120, 0.9), rgba(95, 70, 40, 0.85));
+}
+
+body.ship-page *::-webkit-scrollbar-corner {
+    background: rgba(24, 18, 12, 0.5);
+}
+
+body.ship-page[data-theme="light"] * {
+    scrollbar-color: rgba(120, 82, 42, 0.65) rgba(240, 228, 210, 0.85);
+}
+
+body.ship-page[data-theme="light"] *::-webkit-scrollbar-track {
+    background: rgba(236, 220, 198, 0.75);
+    box-shadow: inset 0 0 0 1px rgba(130, 95, 55, 0.15);
+}
+
+body.ship-page[data-theme="light"] *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(201, 169, 98, 0.9), rgba(139, 94, 43, 0.75));
+    border: 2px solid rgba(255, 252, 246, 0.4);
+}
+
+body.ship-page[data-theme="light"] *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(220, 185, 110, 0.95), rgba(100, 68, 32, 0.85));
+}
+
+body.ship-page[data-theme="light"] *::-webkit-scrollbar-corner {
+    background: rgba(236, 220, 198, 0.6);
 }

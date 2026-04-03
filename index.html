@@ -52,7 +52,11 @@
                 <span><strong>Hull</strong> nominal</span>
                 <span><strong>Δv</strong> don’t ask</span>
                 <span><strong>Mission clock</strong> <span id="ship-mission-clock">00:00:00</span></span>
-                <button type="button" id="theme-toggle" class="ship-theme-toggle" aria-label="Toggle dark and light mode">Light mode</button>
+                <span class="ship-status__controls">
+                    <button type="button" id="ship-home-btn" class="ship-home-toggle" aria-label="Open astrogation chart on main computer">Home</button>
+                    <button type="button" id="ship-registry-btn" class="ship-registry-toggle" aria-label="Open crew registry on main computer">Crew login</button>
+                    <button type="button" id="theme-toggle" class="ship-theme-toggle" aria-label="Toggle dark and light mode">Light mode</button>
+                </span>
             </div>
         </header>
 
@@ -63,6 +67,10 @@
                 <button type="button" class="ship-station" data-pov="-1" data-src="gallery.html" data-label="MAIN COMPUTER — MEMORY BANK">
                     Memory bank
                     <small>Port beam · archive wall</small>
+                </button>
+                <button type="button" class="ship-station" data-pov="-1" data-src="auth.html" data-label="MAIN COMPUTER — PURSER REGISTRY">
+                    Purser registry
+                    <small>Port · crew manifest terminal</small>
                 </button>
                 <button type="button" class="ship-station is-active" data-pov="0" data-src="home.html" data-label="MAIN COMPUTER — ASTROGATION">
                     Astrogation
@@ -90,13 +98,14 @@
             </section>
 
             <aside class="ship-side" id="ship-side-panel">
+                <div class="ship-side-stack">
                 <section class="ship-side-panel is-active" data-panel="home">
                     <h3>Ship’s log</h3>
                     <p>You are not browsing the web. You are seated at the Meridian’s primary console. The parchment charts and contracts are software running on this machine.</p>
                     <h3>Nearby</h3>
                     <ul>
                         <li>Fore — observation blister (see viewport arc)</li>
-                        <li>Port — memory bank gallery</li>
+                        <li>Port — memory bank gallery · purser registry</li>
                         <li>Aft — rec deck simulators</li>
                     </ul>
                 </section>
@@ -112,23 +121,96 @@
                     </ul>
                 </section>
 
+                <section class="ship-side-panel" data-panel="auth">
+                    <h3>Purser’s notice</h3>
+                    <p>The manifest terminal does not uplink. Sign-in and registration forms are theatrical — they print receipts on screen and forget everything when you leave.</p>
+                    <h3>Standing rules</h3>
+                    <ul>
+                        <li>Passphrases are not stored in ship memory</li>
+                        <li>Call signs are for flavor; the computer does not judge taste</li>
+                        <li>Disputes: deck-1 purser window (closed during drills)</li>
+                    </ul>
+                </section>
+
                 <section class="ship-side-panel" data-panel="games">
                     <h3>Rec deck leaderboard</h3>
                     <p>Unofficial scores recorded by bored crew. Integrity of entries is politely doubtful.</p>
+                    <p class="ship-lb-legend"><strong>Event:</strong> reflex ping (single tap, ship clock). <strong>Strikes:</strong> early tap = void run. <strong>Log sync:</strong> MET 204+ · buffer 7C stale.</p>
                     <ol class="ship-leaderboard">
-                        <li><span>Cmdr. Ylla</span><strong>162 ms</strong></li>
-                        <li><span>Deckhand Sol</span><strong>171 ms</strong></li>
-                        <li><span>Unit 734-B</span><strong>179 ms</strong></li>
-                        <li><span>Terry (acct.)</span><strong>188 ms</strong></li>
-                        <li><span>You (pending)</span><strong>--</strong></li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Cmdr. Ylla</span>
+                                <span class="ship-lb-detail">Helm · verified · no stim within 6h (claimed)</span>
+                            </div>
+                            <strong>162 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Deckhand Sol</span>
+                                <span class="ship-lb-detail">Cargo · second attempt · witness: nav table cam β</span>
+                            </div>
+                            <strong>171 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Unit 734-B</span>
+                                <span class="ship-lb-detail">Maintenance drone · optical trigger · disputed (human assist?)</span>
+                            </div>
+                            <strong>179 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Terry (acct.)</span>
+                                <span class="ship-lb-detail">Contract accounting · mobile terminal · glare correction filed</span>
+                            </div>
+                            <strong>188 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Spec. Kiran</span>
+                                <span class="ship-lb-detail">Life support · gloves on · “acceptable” per medic note 11-Ω</span>
+                            </div>
+                            <strong>194 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Anonymous / galley</span>
+                                <span class="ship-lb-detail">Grease on panel · run rejected then reinstated by vote</span>
+                            </div>
+                            <strong>201 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">Ens. Mora</span>
+                                <span class="ship-lb-detail">Comm array · fatigue tier 2 · best clean run this week</span>
+                            </div>
+                            <strong>209 ms</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">SIM ghost (cache)</span>
+                                <span class="ship-lb-detail">No biometric · duplicate Terry row · marked void by purser</span>
+                            </div>
+                            <strong>—</strong>
+                        </li>
+                        <li>
+                            <div class="ship-lb-cell">
+                                <span class="ship-lb-name">You (pending)</span>
+                                <span class="ship-lb-detail">Astrogation console · submit on rec deck · notarized by nobody</span>
+                            </div>
+                            <strong>--</strong>
+                        </li>
                     </ol>
+                    <p class="ship-lb-foot">Protests to the morale officer. Pair match &amp; orbit lock times live on deck-2 chalkboard (water damage, legibility 62%).</p>
                 </section>
+                </div>
 
                 <div class="ship-schematic" aria-hidden="true">DECK 1
 [BRIDGE]──[YOU]
    │
    ├─ MON (you are here)
    ├─ GAL stowage
+   ├─ PUR manifest
    └─ SIM-2</div>
             </aside>
         </div>

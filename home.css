@@ -17,22 +17,23 @@ body.codex-home {
     flex-direction: column;
     font-family: "Cormorant Garamond", Georgia, serif;
     color: #3d2914;
-    --sheet-inset: clamp(0.65rem, 2.2vw, 1.35rem);
-    /* Wooden desk / binding visible around the sheet */
+    --sheet-inset-x: 0;
+    --sheet-inset-y: clamp(0.4rem, 1.35vh, 0.95rem);
     background:
         radial-gradient(ellipse 120% 100% at 50% 0%, rgba(45, 32, 22, 0.5), transparent 55%),
         linear-gradient(160deg, #4a3828 0%, #3d2e22 40%, #352820 100%);
     background-attachment: fixed;
 }
 
-/* Parchment sheet */
 body.codex-home::before {
     content: "";
     position: fixed;
-    inset: var(--sheet-inset);
+    inset: var(--sheet-inset-y) var(--sheet-inset-x);
     z-index: 0;
     pointer-events: none;
     border-radius: 1px;
+    opacity: 0;
+    animation: codex-parchment-in 0.88s cubic-bezier(0.33, 1, 0.32, 1) forwards;
     background:
         radial-gradient(ellipse 80% 50% at 20% 15%, rgba(255, 250, 235, 0.45), transparent 50%),
         radial-gradient(ellipse 60% 40% at 85% 75%, rgba(220, 200, 170, 0.35), transparent 45%),
@@ -45,18 +46,14 @@ body.codex-home::before {
         0 4px 12px rgba(45, 35, 25, 0.25);
 }
 
-/*
- * Paper texture stack (vergé + grain + pulp):
- * — repeating lines mimic laid / ribbed paper
- * — coarse feTurbulence = fibrous pulp blotches
- * — fine feTurbulence = tooth of the sheet
- */
 .sheet-grain {
     position: fixed;
-    inset: var(--sheet-inset);
+    inset: var(--sheet-inset-y) var(--sheet-inset-x);
     z-index: 1;
     pointer-events: none;
     border-radius: 1px;
+    opacity: 0;
+    animation: codex-grain-in 1.05s cubic-bezier(0.33, 1, 0.32, 1) 0.2s forwards;
     background-image:
         url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.62'/%3E%3C/svg%3E"),
         url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.026' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)' opacity='0.5'/%3E%3C/svg%3E"),
@@ -86,10 +83,8 @@ body.codex-home::before {
     background-repeat: repeat, repeat, repeat, repeat, repeat;
     background-position: 0 0, 17px 31px, 0 0, 0 0, 0 0;
     mix-blend-mode: multiply;
-    opacity: 0.34;
 }
 
-/* Extra tooth on top (screen blend keeps highlights) */
 .sheet-grain::after {
     content: "";
     position: absolute;
@@ -103,13 +98,14 @@ body.codex-home::before {
     pointer-events: none;
 }
 
-/* Specks & age spots (fiber clumps, dust) */
 .sheet-flecks {
     position: fixed;
-    inset: var(--sheet-inset);
+    inset: var(--sheet-inset-y) var(--sheet-inset-x);
     z-index: 1;
     pointer-events: none;
     border-radius: 1px;
+    opacity: 0;
+    animation: codex-flecks-in 1.1s cubic-bezier(0.33, 1, 0.32, 1) 0.28s forwards;
     background-image:
         radial-gradient(ellipse 120% 40% at 10% 20%, rgba(180, 150, 110, 0.07), transparent 50%),
         radial-gradient(ellipse 80% 50% at 92% 88%, rgba(160, 130, 95, 0.06), transparent 45%),
@@ -127,7 +123,6 @@ body.codex-home::before {
     background-size: 100% 100%, 100% 100%, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 180px 180px, 100% 100%;
     background-repeat: no-repeat, no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
     mix-blend-mode: multiply;
-    opacity: 0.75;
 }
 
 header {
@@ -190,6 +185,91 @@ header .latin-tag {
     line-height: 1.2;
 }
 
+@keyframes codex-parchment-in {
+    to { opacity: 1; }
+}
+
+@keyframes codex-grain-in {
+    to { opacity: 0.34; }
+}
+
+@keyframes codex-flecks-in {
+    to { opacity: 0.75; }
+}
+
+@keyframes codex-header-slot {
+    from {
+        opacity: 0;
+        transform: translateY(-0.85rem);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes codex-stage-rise {
+    from {
+        opacity: 0;
+        transform: translateY(min(18vh, 130px)) scale(0.9);
+        filter: blur(11px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes codex-sun-land {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.32);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes codex-bridge-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header > * {
+    opacity: 0;
+    animation: codex-header-slot 0.74s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+header .header-ornaments {
+    animation-delay: 0.05s;
+}
+
+header h1 {
+    animation-delay: 0.12s;
+}
+
+header .subtitle-rule {
+    animation-delay: 0.2s;
+}
+
+header p {
+    animation-delay: 0.3s;
+}
+
+header .latin-tag {
+    animation-delay: 0.38s;
+}
+
 .stage-wrap {
     position: relative;
     z-index: 2;
@@ -206,6 +286,7 @@ header .latin-tag {
 
 .solar-system {
     position: relative;
+    contain: layout;
     container-type: size;
     container-name: orbitmap;
     width: min(100cqw, 100cqh, 820px, 94vmin);
@@ -221,6 +302,8 @@ header .latin-tag {
         inset 0 0 0 1px rgba(92, 61, 30, 0.12),
         inset 0 0 80px rgba(92, 61, 30, 0.04);
     border: 1px solid rgba(92, 61, 30, 0.14);
+    opacity: 0;
+    animation: codex-stage-rise 1.12s cubic-bezier(0.2, 1, 0.34, 1) 0.14s both;
 }
 
 .sun {
@@ -232,7 +315,9 @@ header .latin-tag {
     margin: 0;
     transform: translate(-50%, -50%);
     z-index: 10;
-    animation: sun-pulse 4s ease-in-out infinite;
+    animation:
+        codex-sun-land 0.88s cubic-bezier(0.2, 1, 0.35, 1) 0.32s both,
+        sun-pulse 4s ease-in-out 1.15s infinite;
     filter: drop-shadow(0 2px 4px rgba(92, 61, 30, 0.25)) drop-shadow(0 0 18px rgba(255, 200, 100, 0.55)) drop-shadow(0 0 36px rgba(255, 170, 80, 0.25));
 }
 
@@ -273,6 +358,7 @@ header .latin-tag {
     transform-origin: center center;
     pointer-events: none;
     z-index: calc(var(--z, 1));
+    will-change: transform;
 }
 
 @keyframes spin {
@@ -352,7 +438,6 @@ header .latin-tag {
     .header-ornaments { letter-spacing: 1.8em; padding-left: 1.8em; }
 }
 
-/* Cross-document view transitions: morph planet + sun between pages */
 @view-transition {
     navigation: auto;
 }
@@ -381,11 +466,10 @@ header .latin-tag {
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Link to full-ship UI (hidden when astrogation runs inside the bridge iframe) */
 .ship-to-bridge {
     position: fixed;
-    bottom: max(var(--sheet-inset), 0.5rem);
-    left: max(var(--sheet-inset), 0.5rem);
+    bottom: max(var(--sheet-inset-y), 0.5rem);
+    left: max(var(--sheet-inset-x), 0.5rem);
     z-index: 40;
     padding: 0.3rem 0.55rem;
     font-family: system-ui, sans-serif;
@@ -399,6 +483,8 @@ header .latin-tag {
     border: 1px solid rgba(92, 61, 30, 0.28);
     border-radius: 2px;
     box-shadow: 0 2px 10px rgba(45, 35, 25, 0.12);
+    opacity: 0;
+    animation: codex-bridge-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.82s forwards;
 }
 
 .ship-to-bridge:hover {
@@ -406,7 +492,6 @@ header .latin-tag {
     border-color: rgba(92, 61, 30, 0.45);
 }
 
-/* Theme from bridge toggle */
 body.codex-home[data-theme="dark"] {
     color: #d9cab0;
     background:
@@ -425,6 +510,19 @@ body.codex-home[data-theme="dark"] .sheet-grain {
     opacity: 0.24;
 }
 
+body.codex-home[data-theme="dark"] .solar-system {
+    background:
+        radial-gradient(circle at 45% 40%, rgba(24, 18, 12, 0.92) 0%, rgba(16, 12, 9, 0.65) 40%, rgba(10, 8, 6, 0.35) 65%, transparent 78%);
+    box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.4),
+        inset 0 0 100px rgba(0, 0, 0, 0.42);
+    border-color: rgba(62, 48, 34, 0.55);
+}
+
+body.codex-home[data-theme="dark"] .orbit {
+    border-color: rgba(200, 175, 135, 0.32);
+}
+
 body.codex-home[data-theme="dark"] .latin-tag,
 body.codex-home[data-theme="dark"] .planet-link span,
 body.codex-home[data-theme="dark"] .ship-to-bridge {
@@ -433,4 +531,106 @@ body.codex-home[data-theme="dark"] .ship-to-bridge {
 
 body.codex-home[data-theme="light"] {
     color: #3d2914;
+}
+
+body.codex-home * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(92, 61, 30, 0.55) rgba(230, 210, 180, 0.5);
+}
+
+body.codex-home *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+body.codex-home *::-webkit-scrollbar-track {
+    background: rgba(220, 200, 170, 0.35);
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(92, 61, 30, 0.1);
+}
+
+body.codex-home *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(201, 169, 98, 0.9), rgba(120, 88, 52, 0.85));
+    border-radius: 5px;
+    border: 2px solid rgba(252, 248, 238, 0.35);
+}
+
+body.codex-home *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(232, 197, 110, 0.95), rgba(100, 72, 42, 0.9));
+}
+
+body.codex-home *::-webkit-scrollbar-corner {
+    background: rgba(220, 200, 170, 0.25);
+}
+
+body.codex-home[data-theme="dark"] * {
+    scrollbar-color: rgba(215, 178, 106, 0.65) rgba(28, 20, 14, 0.85);
+}
+
+body.codex-home[data-theme="dark"] *::-webkit-scrollbar-track {
+    background: rgba(22, 16, 12, 0.75);
+    box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.12);
+}
+
+body.codex-home[data-theme="dark"] *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(200, 165, 95, 0.85), rgba(90, 65, 38, 0.8));
+    border-color: rgba(40, 32, 22, 0.6);
+}
+
+body.codex-home[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(232, 205, 130, 0.9), rgba(110, 80, 48, 0.85));
+}
+
+body.codex-home[data-theme="dark"] *::-webkit-scrollbar-corner {
+    background: rgba(22, 16, 12, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.codex-home::before,
+    .sheet-grain,
+    .sheet-flecks {
+        animation: none;
+    }
+
+    body.codex-home::before {
+        opacity: 1;
+    }
+
+    .sheet-grain {
+        opacity: 0.34;
+    }
+
+    .sheet-flecks {
+        opacity: 0.75;
+    }
+
+    header > * {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+
+    .solar-system {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+
+    .sun {
+        animation: sun-pulse 4s ease-in-out infinite;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .ship-to-bridge {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .orbit-track {
+        will-change: auto;
+    }
 }

@@ -30,8 +30,6 @@
         apply(t);
         try {
             localStorage.setItem(KEY, t);
-        } catch (e) {
-            // Storage may be unavailable; applying theme is enough.
-        }
+        } catch (e) {}
     });
 })();

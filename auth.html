@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship’s registry — ISS Meridian</title>
+    <link rel="stylesheet" href="ship-pages.css">
+    <style>
+        body.ship-page--auth .ship-page-header {
+            max-width: 40rem;
+        }
+
+        .auth-main {
+            max-width: 26rem;
+            margin: 0 auto;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(186, 146, 88, 0.35);
+            background: rgba(12, 9, 6, 0.55);
+        }
+
+        .auth-tabs button {
+            flex: 1;
+            margin: 0;
+            padding: 0.55rem 0.65rem;
+            font-family: Cinzel, serif;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(180, 165, 135, 0.65);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .auth-tabs button:hover {
+            color: rgba(232, 197, 110, 0.9);
+            background: rgba(201, 169, 98, 0.08);
+        }
+
+        .auth-tabs button:focus-visible {
+            outline: 2px solid rgba(201, 169, 98, 0.55);
+            outline-offset: -2px;
+            z-index: 1;
+        }
+
+        .auth-tabs button[aria-selected="true"] {
+            color: #1a1208;
+            background: linear-gradient(180deg, #d4b878 0%, #9a7228 52%, #6b4a1a 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 248, 220, 0.25);
+        }
+
+        .auth-panel {
+            padding: 1rem 1.05rem 1.1rem;
+            border-radius: 4px;
+            border: 1px solid rgba(186, 146, 88, 0.32);
+            background: rgba(22, 16, 11, 0.72);
+            box-shadow:
+                0 6px 28px rgba(25, 18, 12, 0.4),
+                inset 0 1px 0 rgba(255, 248, 220, 0.04);
+        }
+
+        .auth-panel[hidden] {
+            display: none;
+        }
+
+        .auth-panel h2 {
+            margin: 0 0 0.75rem;
+            font-family: Cinzel, serif;
+            font-weight: 600;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(201, 169, 98, 0.92);
+        }
+
+        .auth-field {
+            margin-bottom: 0.75rem;
+        }
+
+        .auth-field label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-family: Cinzel, serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(200, 185, 155, 0.72);
+        }
+
+        .auth-field input[type="text"],
+        .auth-field input[type="email"],
+        .auth-field input[type="password"] {
+            width: 100%;
+            padding: 0.5rem 0.55rem;
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: 1rem;
+            color: #f2e8d4;
+            background: rgba(10, 8, 6, 0.65);
+            border: 1px solid rgba(176, 140, 88, 0.4);
+            border-radius: 3px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .auth-field input::placeholder {
+            color: rgba(180, 165, 140, 0.35);
+            font-style: italic;
+        }
+
+        .auth-field input:focus {
+            outline: none;
+            border-color: rgba(201, 169, 98, 0.55);
+            box-shadow: 0 0 0 2px rgba(201, 169, 98, 0.15);
+        }
+
+        .auth-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0 0.85rem;
+        }
+
+        .auth-check {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            font-size: 0.82rem;
+            color: rgba(200, 185, 158, 0.78);
+        }
+
+        .auth-check input {
+            width: 0.95rem;
+            height: 0.95rem;
+            accent-color: #c9a962;
+        }
+
+        .auth-submit {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            padding: 0.5rem 0.85rem;
+            font-family: Cinzel, serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #1a1208;
+            background: linear-gradient(180deg, #d4b878 0%, #9a7228 48%, #6b4a1a 100%);
+            border: 1px solid rgba(201, 169, 98, 0.5);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: filter 0.15s ease;
+        }
+
+        .auth-submit:hover,
+        .auth-submit:focus-visible {
+            filter: brightness(1.08);
+            outline: none;
+        }
+
+        .auth-submit:focus-visible {
+            box-shadow: 0 0 0 2px rgba(18, 12, 8, 0.9), 0 0 0 4px rgba(201, 169, 98, 0.4);
+        }
+
+        .auth-msg {
+            margin-top: 0.85rem;
+            min-height: 1.35em;
+            font-size: 0.82rem;
+            font-style: italic;
+            line-height: 1.45;
+            color: #d4b878;
+        }
+
+        .auth-msg.is-warn {
+            color: #e8b8a8;
+        }
+
+        .auth-msg.is-ok {
+            color: #b8d4a8;
+        }
+
+        .auth-foot {
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(186, 146, 88, 0.18);
+            font-size: 0.78rem;
+            line-height: 1.5;
+            color: rgba(180, 165, 140, 0.55);
+        }
+
+        .auth-foot strong {
+            font-weight: 600;
+            color: rgba(201, 169, 98, 0.65);
+        }
+
+        .auth-nav {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem 1rem;
+            justify-content: center;
+            font-size: 0.82rem;
+        }
+
+        .auth-nav a {
+            font-family: Cinzel, serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        body.ship-page[data-theme="light"] .auth-tabs {
+            border-color: rgba(130, 95, 55, 0.32);
+            background: rgba(255, 252, 246, 0.65);
+        }
+
+        body.ship-page[data-theme="light"] .auth-tabs button {
+            color: rgba(82, 62, 40, 0.65);
+        }
+
+        body.ship-page[data-theme="light"] .auth-tabs button:hover {
+            color: #5c3d1e;
+            background: rgba(201, 169, 98, 0.12);
+        }
+
+        body.ship-page[data-theme="light"] .auth-tabs button[aria-selected="true"] {
+            color: #2a1a0c;
+        }
+
+        body.ship-page[data-theme="light"] .auth-panel {
+            background: rgba(247, 240, 224, 0.88);
+            border-color: rgba(130, 95, 55, 0.3);
+            box-shadow: 0 6px 22px rgba(90, 60, 28, 0.1);
+        }
+
+        body.ship-page[data-theme="light"] .auth-panel h2 {
+            color: #8b5e2b;
+        }
+
+        body.ship-page[data-theme="light"] .auth-field label {
+            color: rgba(74, 56, 36, 0.78);
+        }
+
+        body.ship-page[data-theme="light"] .auth-field input[type="text"],
+        body.ship-page[data-theme="light"] .auth-field input[type="email"],
+        body.ship-page[data-theme="light"] .auth-field input[type="password"] {
+            color: #3d2914;
+            background: rgba(255, 252, 246, 0.92);
+            border-color: rgba(130, 95, 55, 0.35);
+        }
+
+        body.ship-page[data-theme="light"] .auth-check {
+            color: rgba(74, 56, 36, 0.82);
+        }
+
+        body.ship-page[data-theme="light"] .auth-foot {
+            color: rgba(74, 56, 36, 0.55);
+        }
+
+        body.ship-page[data-theme="light"] .auth-foot strong {
+            color: rgba(107, 74, 40, 0.75);
+        }
+
+        body.ship-page[data-theme="light"] .auth-msg.is-warn {
+            color: #8b4034;
+        }
+
+        body.ship-page[data-theme="light"] .auth-msg.is-ok {
+            color: #3d6230;
+        }
+    </style>
+</head>
+<body class="ship-page ship-page--auth">
+    <header class="ship-page-header">
+        <p class="ship-page-ornaments" aria-hidden="true">☙ ❧</p>
+        <h1>Ship’s registry</h1>
+        <hr class="ship-page-rule" aria-hidden="true" />
+        <p class="ship-page-lede">Purser’s terminal for crew identity. Nothing here talks to Earth. If you are expecting OAuth, you brought the wrong century.</p>
+        <span class="ship-page-tag">Tabulae nominum</span>
+    </header>
+
+    <main class="auth-main" aria-label="Sign in or register">
+        <div class="auth-tabs" role="tablist" aria-label="Registry mode">
+            <button type="button" role="tab" id="auth-tab-login" aria-selected="true" aria-controls="auth-panel-login">Sign in</button>
+            <button type="button" role="tab" id="auth-tab-register" aria-selected="false" aria-controls="auth-panel-register">Register</button>
+        </div>
+
+        <div class="auth-panel" id="auth-panel-login" role="tabpanel" aria-labelledby="auth-tab-login">
+            <h2>Return to roster</h2>
+            <form id="form-login" novalidate>
+                <div class="auth-field">
+                    <label for="login-id">Crew ID or email</label>
+                    <input type="text" id="login-id" name="login-id" autocomplete="username" placeholder="e.g. meridian.yl / comms@" />
+                </div>
+                <div class="auth-field">
+                    <label for="login-pass">Passphrase</label>
+                    <input type="password" id="login-pass" name="login-pass" autocomplete="current-password" placeholder="••••••••" />
+                </div>
+                <div class="auth-row">
+                    <label class="auth-check">
+                        <input type="checkbox" id="login-remember" name="remember" />
+                        <span>Remember this console</span>
+                    </label>
+                </div>
+                <button type="submit" class="auth-submit">Enter manifest</button>
+                <p class="auth-msg" id="msg-login" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="auth-panel" id="auth-panel-register" role="tabpanel" aria-labelledby="auth-tab-register" hidden>
+            <h2>New filing</h2>
+            <form id="form-register" novalidate>
+                <div class="auth-field">
+                    <label for="reg-name">Call sign</label>
+                    <input type="text" id="reg-name" name="callsign" autocomplete="nickname" placeholder="How the log will cite you" />
+                </div>
+                <div class="auth-field">
+                    <label for="reg-email">Shipboard email</label>
+                    <input type="email" id="reg-email" name="email" autocomplete="email" placeholder="you@meridian.local" />
+                </div>
+                <div class="auth-field">
+                    <label for="reg-pass">Passphrase</label>
+                    <input type="password" id="reg-pass" name="password" autocomplete="new-password" placeholder="Eight characters or more" minlength="8" />
+                </div>
+                <div class="auth-field">
+                    <label for="reg-pass2">Confirm passphrase</label>
+                    <input type="password" id="reg-pass2" name="password2" autocomplete="new-password" placeholder="Again" minlength="8" />
+                </div>
+                <button type="submit" class="auth-submit">File credentials</button>
+                <p class="auth-msg" id="msg-register" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <p class="auth-foot">
+            <strong>Offline console.</strong> This form does not transmit data. Submit actions only print a receipt on this screen — useful for layout demos and for reminding visitors that the Meridian is fiction.
+        </p>
+
+        <nav class="auth-nav" aria-label="Leave registry">
+            <a href="index.html" target="_top">Command bridge</a>
+            <a href="home.html">Astrogation chart</a>
+        </nav>
+    </main>
+
+    <script src="theme-sync.js"></script>
+    <script>
+        (function () {
+            "use strict";
+
+            var tabLogin = document.getElementById("auth-tab-login");
+            var tabRegister = document.getElementById("auth-tab-register");
+            var panelLogin = document.getElementById("auth-panel-login");
+            var panelRegister = document.getElementById("auth-panel-register");
+            var formLogin = document.getElementById("form-login");
+            var formRegister = document.getElementById("form-register");
+            var msgLogin = document.getElementById("msg-login");
+            var msgRegister = document.getElementById("msg-register");
+
+            function selectTab(register) {
+                tabLogin.setAttribute("aria-selected", register ? "false" : "true");
+                tabRegister.setAttribute("aria-selected", register ? "true" : "false");
+                panelLogin.hidden = !!register;
+                panelRegister.hidden = !register;
+                if (!register) {
+                    msgRegister.textContent = "";
+                    msgRegister.className = "auth-msg";
+                } else {
+                    msgLogin.textContent = "";
+                    msgLogin.className = "auth-msg";
+                }
+            }
+
+            tabLogin.addEventListener("click", function () {
+                selectTab(false);
+            });
+            tabRegister.addEventListener("click", function () {
+                selectTab(true);
+            });
+
+            function stamp() {
+                var d = new Date();
+                return (
+                    String(d.getHours()).padStart(2, "0") +
+                    ":" +
+                    String(d.getMinutes()).padStart(2, "0") +
+                    " MET · stamp " +
+                    Math.random().toString(36).slice(2, 8).toUpperCase()
+                );
+            }
+
+            formLogin.addEventListener("submit", function (e) {
+                e.preventDefault();
+                var id = document.getElementById("login-id").value.trim();
+                var pass = document.getElementById("login-pass").value;
+                msgLogin.className = "auth-msg";
+                if (!id || !pass) {
+                    msgLogin.classList.add("is-warn");
+                    msgLogin.textContent = "Purser refuses empty fields. Try again.";
+                    return;
+                }
+                msgLogin.classList.add("is-ok");
+                msgLogin.textContent =
+                    "Receipt: session not created (no uplink). Your credentials were read once and discarded. " + stamp();
+            });
+
+            formRegister.addEventListener("submit", function (e) {
+                e.preventDefault();
+                var name = document.getElementById("reg-name").value.trim();
+                var email = document.getElementById("reg-email").value.trim();
+                var p1 = document.getElementById("reg-pass").value;
+                var p2 = document.getElementById("reg-pass2").value;
+                msgRegister.className = "auth-msg";
+                if (!name || !email || !p1 || !p2) {
+                    msgRegister.classList.add("is-warn");
+                    msgRegister.textContent = "Incomplete filing. All lines must be inked.";
+                    return;
+                }
+                if (p1 !== p2) {
+                    msgRegister.classList.add("is-warn");
+                    msgRegister.textContent = "Passphrases do not match. The computer notices these things.";
+                    return;
+                }
+                if (p1.length < 8) {
+                    msgRegister.classList.add("is-warn");
+                    msgRegister.textContent = "Passphrase too short — eight glyphs minimum, per standing order.";
+                    return;
+                }
+                msgRegister.classList.add("is-ok");
+                msgRegister.textContent =
+                    "Receipt: no account stored. Call sign «" +
+                    name +
+                    "» would be handsome on a badge, but this heap saves nothing. " +
+                    stamp();
+            });
+
+            if (window.self !== window.top) {
+                var authNav = document.querySelector(".auth-nav");
+                if (authNav) authNav.hidden = true;
+            }
+        })();
+    </script>
+</body>
+</html>
