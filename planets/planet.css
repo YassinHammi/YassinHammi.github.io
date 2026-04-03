@@ -18,6 +18,7 @@
 html {
     height: 100%;
     overflow: hidden;
+    -webkit-text-size-adjust: 100%;
 }
 
 .planet-body {
@@ -28,6 +29,7 @@ html {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    -webkit-tap-highlight-color: rgba(201, 169, 98, 0.18);
     color: #e8e0d4;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: clamp(0.78rem, 1.35vh, 1.05rem);
@@ -62,7 +64,10 @@ html {
     gap: clamp(0.4rem, 1.2vh, 0.85rem) clamp(0.65rem, 2vw, 1.25rem);
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, auto) minmax(0, 1fr);
-    padding: clamp(0.35rem, 1.2vh, 0.75rem) clamp(0.65rem, 2vw, 1.25rem) 4.75rem;
+    padding-top: max(clamp(0.35rem, 1.2vh, 0.75rem), env(safe-area-inset-top, 0px));
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    padding-left: max(clamp(0.65rem, 2vw, 1.25rem), env(safe-area-inset-left, 0px));
+    padding-right: max(clamp(0.65rem, 2vw, 1.25rem), env(safe-area-inset-right, 0px));
     align-items: stretch;
     overflow: hidden;
 }
@@ -73,7 +78,10 @@ html {
         grid-template-rows: minmax(0, 1fr);
         align-items: center;
         gap: 0.5rem 1rem;
-        padding: clamp(0.35rem, 1vh, 0.65rem) clamp(0.5rem, 1.5vw, 1rem) 4.5rem;
+        padding-top: max(clamp(0.35rem, 1vh, 0.65rem), env(safe-area-inset-top, 0px));
+        padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+        padding-left: max(clamp(0.5rem, 1.5vw, 1rem), env(safe-area-inset-left, 0px));
+        padding-right: max(clamp(0.5rem, 1.5vw, 1rem), env(safe-area-inset-right, 0px));
     }
 }
 
@@ -224,7 +232,7 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: clamp(320px, 50vh, 520px);
+    min-height: clamp(260px, min(50vh, 85dvw), 520px);
     order: -1;
 }
 
@@ -1303,6 +1311,17 @@ body.contract-modal-open {
 
     .contract-paper__main {
         max-height: none;
+    }
+
+    .contract-tease {
+        min-height: 44px;
+        padding: 0.55rem 1rem;
+        touch-action: manipulation;
+    }
+
+    .contract-submit {
+        min-height: 44px;
+        touch-action: manipulation;
     }
 }
 
