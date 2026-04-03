@@ -1475,24 +1475,75 @@ body.contract-modal-open {
 /* Theme from bridge toggle */
 body.planet-body[data-theme="dark"] {
     color: #d8c9ae;
+    /* Single full-viewport stack so wide screens don’t show darker side bars outside max-width. */
     background:
+        radial-gradient(ellipse 110% 80% at 50% 0%, rgba(255, 220, 160, 0.07), transparent 62%),
         radial-gradient(circle at 50% -8%, rgba(255, 220, 170, 0.06), transparent 56%),
-        linear-gradient(180deg, #120d08 0%, #0c0906 100%);
+        linear-gradient(165deg, #2d2116 0%, #231a12 46%, #1c150f 100%);
 }
 
 body.planet-body[data-theme="dark"] .imperial-wrap {
-    background:
-        radial-gradient(ellipse 110% 80% at 50% 0%, rgba(255, 220, 160, 0.07), transparent 62%),
-        linear-gradient(165deg, #2d2116 0%, #231a12 46%, #1c150f 100%);
-    border-color: rgba(176, 136, 78, 0.38);
+    background: transparent;
 }
 
-body.planet-body[data-theme="dark"] .panel-frame,
-body.planet-body[data-theme="dark"] .center-stage-inner {
+body.planet-body[data-theme="dark"] .panel-frame {
     background: rgba(18, 12, 8, 0.6);
     border-color: rgba(186, 146, 88, 0.34);
 }
 
 body.planet-body[data-theme="dark"] .latin-watermark {
     opacity: 0.1;
+}
+
+/* Scrollbars — imperial / manuscript */
+.planet-body * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 169, 98, 0.45) rgba(18, 12, 22, 0.75);
+}
+
+.planet-body *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+.planet-body *::-webkit-scrollbar-track {
+    background: rgba(20, 14, 26, 0.55);
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.08);
+}
+
+.planet-body *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(180, 145, 85, 0.75), rgba(70, 50, 75, 0.65));
+    border-radius: 5px;
+    border: 2px solid rgba(12, 8, 14, 0.5);
+}
+
+.planet-body *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(215, 185, 120, 0.85), rgba(90, 65, 95, 0.7));
+}
+
+.planet-body *::-webkit-scrollbar-corner {
+    background: rgba(20, 14, 26, 0.45);
+}
+
+body.planet-body[data-theme="dark"] * {
+    scrollbar-color: rgba(215, 178, 106, 0.55) rgba(26, 18, 12, 0.85);
+}
+
+body.planet-body[data-theme="dark"] *::-webkit-scrollbar-track {
+    background: rgba(24, 18, 12, 0.8);
+    box-shadow: inset 0 0 0 1px rgba(176, 136, 78, 0.12);
+}
+
+body.planet-body[data-theme="dark"] *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(200, 165, 95, 0.8), rgba(75, 52, 32, 0.75));
+    border-color: rgba(18, 12, 8, 0.55);
+}
+
+body.planet-body[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(228, 200, 130, 0.88), rgba(95, 68, 40, 0.8));
+}
+
+body.planet-body[data-theme="dark"] *::-webkit-scrollbar-corner {
+    background: rgba(24, 18, 12, 0.7);
 }
