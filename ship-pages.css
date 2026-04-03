@@ -1,0 +1,74 @@
+/* Shared styles for pages shown inside the bridge iframe */
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body.ship-page {
+    margin: 0;
+    min-height: 100%;
+    padding: clamp(0.75rem, 2.5vw, 1.25rem);
+    font-family: "Share Tech Mono", ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a8e0d8;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 80, 90, 0.25) 0%, transparent 55%),
+        linear-gradient(180deg, #0a1218 0%, #060c10 100%);
+}
+
+body.ship-page h1 {
+    margin: 0 0 0.35rem;
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5eead4;
+}
+
+body.ship-page .ship-page-lede {
+    margin: 0 0 1.25rem;
+    font-size: 0.78rem;
+    color: rgba(160, 210, 200, 0.65);
+    max-width: 42rem;
+}
+
+body.ship-page a {
+    color: #7dd3fc;
+}
+
+body.ship-page a:hover {
+    color: #bae6fd;
+}
+
+/* Theme from bridge toggle */
+body.ship-page[data-theme="light"] {
+    color: #4a3520;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(195, 155, 95, 0.18) 0%, transparent 55%),
+        linear-gradient(180deg, #f6efe1 0%, #eadfc9 100%);
+}
+
+body.ship-page[data-theme="light"] h1 {
+    color: #8b5e2b;
+}
+
+body.ship-page[data-theme="light"] .ship-page-lede {
+    color: rgba(90, 70, 46, 0.72);
+}
+
+body.ship-page[data-theme="light"] a {
+    color: #7a4e1f;
+}
+
+body.ship-page[data-theme="light"] a:hover {
+    color: #5a3712;
+}

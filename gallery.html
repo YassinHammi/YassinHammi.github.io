@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory bank — ISS Meridian</title>
+    <link rel="stylesheet" href="ship-pages.css">
+    <style>
+        .gal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.65rem;
+            max-width: 52rem;
+        }
+
+        .gal-card {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(80, 180, 200, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .gal-card__viz {
+            position: absolute;
+            inset: 0;
+        }
+
+        .gal-card__cap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.35rem 0.45rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.04em;
+            color: #e0f8f4;
+            background: linear-gradient(0deg, rgba(0, 12, 16, 0.92) 0%, transparent 100%);
+        }
+
+        .gal-card--nebula .gal-card__viz {
+            background:
+                radial-gradient(ellipse 80% 60% at 30% 40%, rgba(255, 120, 200, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 50% at 70% 60%, rgba(100, 200, 255, 0.45) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #1a1030 0%, #050810 100%);
+        }
+
+        .gal-card--rings .gal-card__viz {
+            background:
+                radial-gradient(ellipse 100% 35% at 50% 50%, transparent 40%, rgba(200, 180, 140, 0.4) 41%, transparent 42%),
+                radial-gradient(circle at 50% 50%, #c4a882 0%, #4a3828 70%, #1a1410 100%);
+        }
+
+        .gal-card--sun .gal-card__viz {
+            background:
+                radial-gradient(circle at 50% 50%, #fff8e0 0%, #f4d76a 25%, #c9a227 45%, #5c3d1e 100%);
+            box-shadow: inset 0 0 40px rgba(255, 200, 100, 0.4);
+        }
+
+        .gal-card--ice .gal-card__viz {
+            background:
+                linear-gradient(135deg, #1e3a5c 0%, #4a8bc8 40%, #7cced4 100%);
+        }
+
+        .gal-card--void .gal-card__viz {
+            background:
+                repeating-conic-gradient(from 0deg at 50% 50%, #0a0c12 0deg 4deg, #121820 4deg 8deg);
+            opacity: 0.95;
+        }
+
+        .gal-card--station .gal-card__viz {
+            background:
+                linear-gradient(90deg, #1a2228 0%, #2a3840 30%, #1a2228 60%, #0e1418 100%);
+            background-size: 8px 100%;
+        }
+
+        .gal-card--station .gal-card__viz::after {
+            content: "";
+            position: absolute;
+            inset: 20%;
+            border: 1px solid rgba(100, 200, 220, 0.3);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(80, 200, 255, 0.15);
+        }
+
+        .gal-card--aurora .gal-card__viz {
+            background:
+                radial-gradient(ellipse 100% 40% at 50% 100%, rgba(80, 255, 200, 0.35) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 30% at 40% 90%, rgba(200, 100, 255, 0.25) 0%, transparent 50%),
+                linear-gradient(180deg, #050810 0%, #0a1520 100%);
+        }
+
+        body.ship-page[data-theme="light"] .gal-card {
+            border-color: rgba(120, 95, 58, 0.3);
+            box-shadow: 0 4px 16px rgba(90, 60, 28, 0.18);
+        }
+
+        body.ship-page[data-theme="light"] .gal-card__cap {
+            color: #f8f2e8;
+            background: linear-gradient(0deg, rgba(70, 42, 18, 0.8) 0%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="ship-page">
+    <h1>Memory bank</h1>
+    <p class="ship-page-lede">Archived holo-stills pulled from the ship’s buffers. None of these files have exif data anymore. Treat them as mood, not evidence.</p>
+    <div class="gal-grid">
+        <figure class="gal-card gal-card--nebula">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Nebula FR-12 · “pink tax”</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--rings">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Ice shepherd · wake turbulence</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--sun">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Local primary · do not taunt</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--ice">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Blue marble cousin · overexposed</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--void">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Deep scan · “empty” sector</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--station">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Docking frame · manual align</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--aurora">
+            <div class="gal-card__viz" aria-hidden="true"></div>
+            <figcaption class="gal-card__cap">Magnetopause ripples · fake colors</figcaption>
+        </figure>
+        <figure class="gal-card gal-card--nebula">
+            <div class="gal-card__viz" aria-hidden="true" style="filter: hue-rotate(140deg)"></div>
+            <figcaption class="gal-card__cap">Duplicate entry · corrupted hue</figcaption>
+        </figure>
+    </div>
+    <script src="theme-sync.js"></script>
+</body>
+</html>

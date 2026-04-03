@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rec deck — ISS Meridian</title>
+    <link rel="stylesheet" href="ship-pages.css">
+    <style>
+        .game-block {
+            margin-bottom: 1.75rem;
+            padding: 1rem;
+            max-width: 28rem;
+            background: rgba(0, 24, 32, 0.55);
+            border: 1px solid rgba(80, 180, 200, 0.22);
+            border-radius: 4px;
+        }
+
+        .game-block h2 {
+            margin: 0 0 0.5rem;
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(120, 220, 200, 0.85);
+        }
+
+        .game-block p {
+            margin: 0 0 0.65rem;
+            font-size: 0.72rem;
+            color: rgba(160, 200, 190, 0.6);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.45rem 0.85rem;
+            font: inherit;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #062a28;
+            background: linear-gradient(180deg, #5eead4 0%, #2dd4bf 100%);
+            border: 1px solid rgba(180, 255, 250, 0.4);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            filter: brightness(1.08);
+            outline: none;
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* Reaction */
+        .rx-pad {
+            margin-top: 0.5rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px dashed rgba(80, 160, 170, 0.25);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(160, 200, 190, 0.5);
+            user-select: none;
+        }
+
+        .rx-pad.is-wait {
+            color: rgba(255, 200, 100, 0.7);
+        }
+
+        .rx-pad.is-go {
+            background: rgba(34, 197, 94, 0.35);
+            border-style: solid;
+            border-color: #22c55e;
+            color: #ecfdf5;
+            cursor: pointer;
+        }
+
+        .rx-pad.is-bad {
+            background: rgba(220, 50, 50, 0.25);
+            border-color: rgba(248, 113, 113, 0.5);
+            color: #fecaca;
+        }
+
+        .rx-result {
+            margin-top: 0.5rem;
+            font-size: 0.72rem;
+            min-height: 1.2em;
+            color: #7dd3fc;
+        }
+
+        /* Memory */
+        .mem-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.35rem;
+            max-width: 240px;
+            margin-top: 0.5rem;
+        }
+
+        .mem-card {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            border: 1px solid rgba(80, 180, 200, 0.3);
+            background: rgba(0, 20, 30, 0.8);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: transform 0.12s ease;
+        }
+
+        .mem-card:hover:not(:disabled) {
+            transform: scale(1.03);
+        }
+
+        .mem-card:disabled {
+            cursor: default;
+        }
+
+        .mem-card.is-flipped {
+            background: rgba(20, 60, 70, 0.9);
+        }
+
+        .mem-card.is-matched {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .mem-card .mem-back {
+            color: rgba(100, 200, 190, 0.35);
+            font-size: 0.55rem;
+            letter-spacing: 0.08em;
+        }
+
+        .mem-card.is-flipped .mem-back,
+        .mem-card:not(.is-flipped) .mem-front {
+            display: none;
+        }
+
+        .mem-card.is-flipped .mem-front,
+        .mem-card:not(.is-flipped) .mem-back {
+            display: block;
+        }
+
+        body.ship-page[data-theme="light"] .game-block {
+            background: rgba(247, 240, 224, 0.85);
+            border-color: rgba(130, 95, 55, 0.3);
+        }
+
+        body.ship-page[data-theme="light"] .game-block h2 {
+            color: #8b5e2b;
+        }
+
+        body.ship-page[data-theme="light"] .game-block p {
+            color: rgba(90, 70, 46, 0.72);
+        }
+
+        body.ship-page[data-theme="light"] .btn {
+            color: #2a1a0c;
+            background: linear-gradient(180deg, #e7c582 0%, #c79a4f 100%);
+            border-color: rgba(139, 94, 43, 0.5);
+        }
+
+        body.ship-page[data-theme="light"] .rx-pad,
+        body.ship-page[data-theme="light"] .mem-card {
+            background: rgba(230, 214, 188, 0.75);
+            border-color: rgba(130, 95, 55, 0.32);
+            color: rgba(82, 62, 40, 0.8);
+        }
+    </style>
+</head>
+<body class="ship-page">
+    <h1>Rec deck</h1>
+    <p class="ship-page-lede">Low-stim simulators to waste ship-time. No achievements. No cloud saves. The computer forgives nothing.</p>
+
+    <section class="game-block" aria-labelledby="rx-title">
+        <h2 id="rx-title">Reflex ping</h2>
+        <p>When the pad flashes green, tap it. Tap early and the computer judges you.</p>
+        <button type="button" class="btn" id="rx-start">Start round</button>
+        <div class="rx-pad" id="rx-pad" role="button" tabindex="0" aria-live="polite">Awaiting start</div>
+        <p class="rx-result" id="rx-result" aria-live="polite"></p>
+    </section>
+
+    <section class="game-block" aria-labelledby="mem-title">
+        <h2 id="mem-title">Pair match · symbols</h2>
+        <p>Eight tiles, four pairs. Flip two; matches stay. Reset anytime.</p>
+        <button type="button" class="btn" id="mem-reset">Shuffle &amp; reset</button>
+        <div class="mem-grid" id="mem-grid"></div>
+        <p class="rx-result" id="mem-status" aria-live="polite"></p>
+    </section>
+
+    <script>
+        (function () {
+            var pad = document.getElementById("rx-pad");
+            var start = document.getElementById("rx-start");
+            var out = document.getElementById("rx-result");
+            var phase = "idle";
+            var tGo = 0;
+            var timeoutId;
+
+            function setPad(cls, text) {
+                pad.className = "rx-pad" + (cls ? " " + cls : "");
+                pad.textContent = text;
+            }
+
+            function clearRound() {
+                clearTimeout(timeoutId);
+                phase = "idle";
+                setPad("", "Awaiting start");
+                start.disabled = false;
+            }
+
+            start.addEventListener("click", function () {
+                if (phase === "wait" || phase === "go") return;
+                out.textContent = "";
+                start.disabled = true;
+                phase = "wait";
+                setPad("is-wait", "Wait…");
+                var delay = 800 + Math.random() * 2200;
+                timeoutId = setTimeout(function () {
+                    phase = "go";
+                    tGo = performance.now();
+                    setPad("is-go", "NOW!");
+                }, delay);
+            });
+
+            function tapRx() {
+                if (phase === "wait") {
+                    clearTimeout(timeoutId);
+                    phase = "bad";
+                    setPad("is-bad", "Too early");
+                    out.textContent = "Computer says: impatient.";
+                    start.disabled = false;
+                    return;
+                }
+                if (phase === "go") {
+                    var ms = Math.round(performance.now() - tGo);
+                    setPad("", "Again?");
+                    out.textContent = ms + " ms — " + (ms < 180 ? "suspiciously fast" : ms < 320 ? "acceptable" : "coffee first");
+                    phase = "idle";
+                    start.disabled = false;
+                }
+            }
+
+            pad.addEventListener("click", tapRx);
+            pad.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    tapRx();
+                }
+            });
+        })();
+
+        (function () {
+            var grid = document.getElementById("mem-grid");
+            var status = document.getElementById("mem-status");
+            var reset = document.getElementById("mem-reset");
+            var symbols = ["◆", "●", "▲", "■"];
+            var flipped = [];
+            var lock = false;
+
+            function build() {
+                grid.innerHTML = "";
+                var deck = symbols.concat(symbols);
+                for (var i = deck.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var t = deck[i];
+                    deck[i] = deck[j];
+                    deck[j] = t;
+                }
+                deck.forEach(function (sym, idx) {
+                    var btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "mem-card";
+                    btn.dataset.sym = sym;
+                    btn.dataset.idx = String(idx);
+                    btn.innerHTML =
+                        '<span class="mem-back">?</span><span class="mem-front" aria-hidden="true">' +
+                        sym +
+                        "</span>";
+                    btn.addEventListener("click", onFlip);
+                    grid.appendChild(btn);
+                });
+                flipped = [];
+                lock = false;
+                status.textContent = "Find the pairs.";
+            }
+
+            function onFlip(e) {
+                var btn = e.currentTarget;
+                if (lock || btn.classList.contains("is-matched") || btn.classList.contains("is-flipped")) return;
+                btn.classList.add("is-flipped");
+                flipped.push(btn);
+                if (flipped.length < 2) return;
+                lock = true;
+                var a = flipped[0];
+                var b = flipped[1];
+                if (a.dataset.sym === b.dataset.sym) {
+                    a.classList.add("is-matched");
+                    b.classList.add("is-matched");
+                    a.disabled = true;
+                    b.disabled = true;
+                    flipped = [];
+                    lock = false;
+                    var left = grid.querySelectorAll(".mem-card:not(.is-matched)").length;
+                    if (left === 0) status.textContent = "Deck clear. The void remains unimpressed.";
+                } else {
+                    setTimeout(function () {
+                        a.classList.remove("is-flipped");
+                        b.classList.remove("is-flipped");
+                        flipped = [];
+                        lock = false;
+                    }, 650);
+                }
+            }
+
+            reset.addEventListener("click", build);
+            build();
+        })();
+    </script>
+    <script src="theme-sync.js"></script>
+</body>
+</html>

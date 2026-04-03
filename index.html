@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISS Meridian — bridge</title>
+    <link rel="stylesheet" href="ship.css">
+</head>
+<body class="ship-bridge" data-pov="0">
+    <div class="ship-cabin" aria-hidden="true">
+        <div class="ship-panorama">
+            <div class="ship-panorama__bay ship-panorama__bay--bow">
+                <div class="ship-bay__void"></div>
+                <div class="ship-bay__stars"></div>
+                <div class="ship-bay__window"></div>
+                <div class="ship-bay__structure">
+                    <div class="ship-bay__rib ship-bay__rib--l"></div>
+                    <div class="ship-bay__rib ship-bay__rib--r"></div>
+                    <div class="ship-bay__console-glow"></div>
+                </div>
+                <div class="ship-bay__floor"></div>
+            </div>
+            <div class="ship-panorama__bay ship-panorama__bay--beam">
+                <div class="ship-bay__void ship-bay__void--violet"></div>
+                <div class="ship-bay__stars ship-bay__stars--shift"></div>
+                <div class="ship-bay__window ship-bay__window--port"></div>
+                <div class="ship-bay__structure ship-bay__structure--archive">
+                    <div class="ship-bay__rack"></div>
+                    <div class="ship-bay__rack ship-bay__rack--2"></div>
+                    <div class="ship-bay__pipe"></div>
+                </div>
+                <div class="ship-bay__floor ship-bay__floor--grid"></div>
+            </div>
+            <div class="ship-panorama__bay ship-panorama__bay--starboard">
+                <div class="ship-bay__void ship-bay__void--warm"></div>
+                <div class="ship-bay__stars ship-bay__stars--shift2"></div>
+                <div class="ship-bay__window ship-bay__window--narrow"></div>
+                <div class="ship-bay__structure ship-bay__structure--sim">
+                    <div class="ship-bay__hazard"></div>
+                    <div class="ship-bay__duct"></div>
+                    <div class="ship-bay__sim-slot"></div>
+                </div>
+                <div class="ship-bay__floor ship-bay__floor--warn"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ship-shell">
+        <header class="ship-status">
+            <div class="ship-status__ship">ISS Meridian · command deck</div>
+            <div class="ship-status__meta">
+                <span><strong>Hull</strong> nominal</span>
+                <span><strong>Δv</strong> don’t ask</span>
+                <span><strong>Mission clock</strong> <span id="ship-mission-clock">00:00:00</span></span>
+                <button type="button" id="theme-toggle" class="ship-theme-toggle" aria-label="Toggle dark and light mode">Light mode</button>
+            </div>
+        </header>
+
+        <div class="ship-body">
+            <nav class="ship-rail" aria-label="Ship stations">
+                <p class="ship-rail__title">Navigate</p>
+                <p class="ship-rail__hint">Each station is another console along the arc of the bridge — your view pans with it.</p>
+                <button type="button" class="ship-station" data-pov="-1" data-src="gallery.html" data-label="MAIN COMPUTER — MEMORY BANK">
+                    Memory bank
+                    <small>Port beam · archive wall</small>
+                </button>
+                <button type="button" class="ship-station is-active" data-pov="0" data-src="home.html" data-label="MAIN COMPUTER — ASTROGATION">
+                    Astrogation
+                    <small>Forward · main chart table</small>
+                </button>
+                <button type="button" class="ship-station" data-pov="1" data-src="games.html" data-label="MAIN COMPUTER — REC DECK">
+                    Rec deck
+                    <small>Starboard · sim bay</small>
+                </button>
+            </nav>
+
+            <section class="ship-monitor-wrap" aria-label="Main computer display">
+                <div class="ship-monitor-bar">
+                    <span class="ship-monitor-bar__label" id="ship-screen-label">MAIN COMPUTER — ASTROGATION</span>
+                    <span class="ship-monitor-bar__blink" aria-hidden="true"></span>
+                </div>
+                <div class="ship-monitor-frame">
+                    <iframe
+                        class="ship-iframe"
+                        id="ship-screen"
+                        src="home.html"
+                        title="Main computer — astrogation"
+                        name="meridianMain"></iframe>
+                </div>
+            </section>
+
+            <aside class="ship-side" id="ship-side-panel">
+                <section class="ship-side-panel is-active" data-panel="home">
+                    <h3>Ship’s log</h3>
+                    <p>You are not browsing the web. You are seated at the Meridian’s primary console. The parchment charts and contracts are software running on this machine.</p>
+                    <h3>Nearby</h3>
+                    <ul>
+                        <li>Fore — observation blister (see viewport arc)</li>
+                        <li>Port — memory bank gallery</li>
+                        <li>Aft — rec deck simulators</li>
+                    </ul>
+                </section>
+
+                <section class="ship-side-panel" data-panel="gallery">
+                    <h3>Curator notes</h3>
+                    <p>Memory bank stream is unstable. Captures are tagged by mood, not by date. Treat color drift as part of the artifact.</p>
+                    <h3>Highlights</h3>
+                    <ul>
+                        <li>“Pink tax” nebula remains crew favorite</li>
+                        <li>Docking frame still under restoration</li>
+                        <li>One entry duplicated by a ghost cache</li>
+                    </ul>
+                </section>
+
+                <section class="ship-side-panel" data-panel="games">
+                    <h3>Rec deck leaderboard</h3>
+                    <p>Unofficial scores recorded by bored crew. Integrity of entries is politely doubtful.</p>
+                    <ol class="ship-leaderboard">
+                        <li><span>Cmdr. Ylla</span><strong>162 ms</strong></li>
+                        <li><span>Deckhand Sol</span><strong>171 ms</strong></li>
+                        <li><span>Unit 734-B</span><strong>179 ms</strong></li>
+                        <li><span>Terry (acct.)</span><strong>188 ms</strong></li>
+                        <li><span>You (pending)</span><strong>--</strong></li>
+                    </ol>
+                </section>
+
+                <div class="ship-schematic" aria-hidden="true">DECK 1
+[BRIDGE]──[YOU]
+   │
+   ├─ MON (you are here)
+   ├─ GAL stowage
+   └─ SIM-2</div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="ship-edge-nav" aria-label="Station navigation">
+        <button type="button" class="ship-edge-nav__btn ship-edge-nav__btn--left" id="ship-nav-left" aria-label="Previous station">
+            ◀
+        </button>
+        <button type="button" class="ship-edge-nav__btn ship-edge-nav__btn--right" id="ship-nav-right" aria-label="Next station">
+            ▶
+        </button>
+    </div>
+
+    <script src="ship.js" defer></script>
+</body>
+</html>
