@@ -32,8 +32,9 @@ html {
     -webkit-tap-highlight-color: rgba(201, 169, 98, 0.18);
     color: #e8e0d4;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(0.78rem, 1.35vh, 1.05rem);
-    line-height: 1.42;
+    /* vh seul rend le texte trop petit quand la barre d’adresse mobile rétrécit la zone ; vw stabilise la lecture */
+    font-size: clamp(0.88rem, 0.35rem + 2.6vw, 1.06rem);
+    line-height: 1.45;
     background:
         radial-gradient(ellipse 120% 80% at 50% -20%, rgba(120, 80, 40, 0.15), transparent 50%),
         radial-gradient(ellipse 80% 50% at 100% 50%, rgba(60, 40, 90, 0.2), transparent),
@@ -63,25 +64,38 @@ html {
     display: grid;
     gap: clamp(0.4rem, 1.2vh, 0.85rem) clamp(0.65rem, 2vw, 1.25rem);
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, auto) minmax(0, 1fr);
+    /* Trois blocs en colonne : une rangée chacun (l’ancien 2e rang 1fr volait toute la hauteur pour une seule colonne). */
+    grid-template-rows: auto auto auto;
+    align-content: start;
     padding-top: max(clamp(0.35rem, 1.2vh, 0.75rem), env(safe-area-inset-top, 0px));
-    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
     padding-left: max(clamp(0.65rem, 2vw, 1.25rem), env(safe-area-inset-left, 0px));
     padding-right: max(clamp(0.65rem, 2vw, 1.25rem), env(safe-area-inset-right, 0px));
     align-items: stretch;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 1024px) {
+    .planet-body {
+        font-size: clamp(0.78rem, 1.35vh, 1.05rem);
+        line-height: 1.42;
+    }
+
     .imperial-wrap {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
         grid-template-rows: minmax(0, 1fr);
+        align-content: stretch;
         align-items: center;
         gap: 0.5rem 1rem;
         padding-top: max(clamp(0.35rem, 1vh, 0.65rem), env(safe-area-inset-top, 0px));
         padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
         padding-left: max(clamp(0.5rem, 1.5vw, 1rem), env(safe-area-inset-left, 0px));
         padding-right: max(clamp(0.5rem, 1.5vw, 1rem), env(safe-area-inset-right, 0px));
+        overflow: hidden;
     }
 }
 
@@ -97,6 +111,36 @@ html {
     display: flex;
     flex-direction: column;
     animation: build-from-top 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (max-width: 63.9375rem) {
+    .column-left,
+    .column-right {
+        overflow: visible;
+    }
+
+    .panel-frame {
+        max-height: min(50vh, 22rem);
+        flex: 1 1 auto;
+        min-height: min(11rem, 38vh);
+    }
+
+    .block h3 {
+        font-size: clamp(0.62rem, 0.55rem + 0.35vw, 0.75rem);
+        letter-spacing: 0.14em;
+    }
+
+    .roman-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .con-block {
+        margin-top: 1rem;
+    }
+
+    .sun-home-btn {
+        touch-action: manipulation;
+    }
 }
 
 .column-left { animation-delay: 0.52s; }
@@ -317,6 +361,66 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 42rem) {
+    .imperial-wrap {
+        gap: clamp(0.35rem, 1vh, 0.65rem) clamp(0.45rem, 1.5vw, 0.85rem);
+        padding-left: max(0.45rem, env(safe-area-inset-left, 0px));
+        padding-right: max(0.45rem, env(safe-area-inset-right, 0px));
+    }
+
+    .column-center {
+        min-height: 0;
+        padding-bottom: 0.25rem;
+    }
+
+    .center-stage-inner {
+        max-width: none;
+        width: min(100%, min(94vw, 82dvh));
+    }
+
+    .planet-showcase {
+        width: min(88%, min(80vw, 380px));
+    }
+
+    .latin-watermark {
+        font-size: clamp(1.75rem, 11vw, 4.25rem);
+    }
+
+    .deity-line {
+        margin: 0.65rem 0 0;
+        font-size: clamp(0.7rem, 3.2vw, 0.85rem);
+        letter-spacing: 0.18em;
+        padding: 0 0.5rem;
+    }
+
+    .panel-frame {
+        padding: clamp(0.45rem, 1.1vh, 0.7rem) clamp(0.5rem, 1.1vw, 0.75rem);
+        max-height: min(46vh, 20rem);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .column-title {
+        font-size: clamp(0.64rem, 0.55rem + 0.45vw, 0.8rem);
+        letter-spacing: 0.16em;
+    }
+
+    .subtitle {
+        font-size: clamp(0.72rem, 0.62rem + 0.55vw, 0.88rem);
+    }
+
+    .sun-home-btn {
+        bottom: max(0.65rem, calc(env(safe-area-inset-bottom, 0px) + 0.4rem));
+    }
+
+    .contract-tease {
+        left: max(0.5rem, env(safe-area-inset-left, 0px));
+        right: max(0.5rem, env(safe-area-inset-right, 0px));
+        bottom: max(5.25rem, calc(env(safe-area-inset-bottom, 0px) + 4.75rem));
+        max-width: none;
+        width: auto;
+    }
 }
 
 .planet-halo {
@@ -1491,7 +1595,155 @@ body.contract-modal-open {
     }
 }
 
-/* Theme from bridge toggle */
+/* Theme from bridge toggle — light (parchemin, aligné sur ship-pages) */
+body.planet-body[data-theme="light"] {
+    color: #3a3028;
+    -webkit-tap-highlight-color: rgba(92, 61, 30, 0.14);
+    background:
+        radial-gradient(ellipse 125% 88% at 50% -12%, rgba(255, 252, 245, 0.97), transparent 52%),
+        radial-gradient(ellipse 82% 58% at 98% 42%, rgba(220, 190, 155, 0.38), transparent 50%),
+        radial-gradient(ellipse 72% 52% at 2% 82%, rgba(198, 210, 228, 0.24), transparent 48%),
+        linear-gradient(168deg, #faf6ee 0%, #f3e9d8 30%, #e8dcc8 58%, #dfd0ba 100%);
+    background-attachment: fixed;
+}
+
+body.planet-body[data-theme="light"]::before {
+    opacity: 0.028;
+}
+
+body.planet-body[data-theme="light"] .imperial-wrap {
+    background: transparent;
+}
+
+body.planet-body[data-theme="light"] .panel-frame {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.78) 0%, rgba(246, 236, 218, 0.92) 100%);
+    border-color: rgba(130, 95, 55, 0.32);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 8px 28px rgba(92, 61, 30, 0.1);
+}
+
+body.planet-body[data-theme="light"] .panel-frame::before {
+    opacity: 0.55;
+}
+
+body.planet-body[data-theme="light"] .column-title {
+    color: #6b5224;
+}
+
+body.planet-body[data-theme="light"] .subtitle {
+    color: rgba(74, 56, 36, 0.75);
+    opacity: 1;
+}
+
+body.planet-body[data-theme="light"] .column-ornament {
+    color: rgba(120, 88, 42, 0.42);
+}
+
+body.planet-body[data-theme="light"] .block h3 {
+    color: #5c4d3a;
+    border-bottom-color: rgba(130, 95, 55, 0.22);
+}
+
+body.planet-body[data-theme="light"] .roman-list {
+    color: #453a30;
+}
+
+body.planet-body[data-theme="light"] .roman-list li::marker {
+    color: rgba(130, 95, 55, 0.5);
+}
+
+body.planet-body[data-theme="light"] .pro-block h3 {
+    color: #2d6b4a;
+}
+
+body.planet-body[data-theme="light"] .con-block h3 {
+    color: #9a4545;
+}
+
+body.planet-body[data-theme="light"] .latin-watermark {
+    color: rgba(92, 61, 30, 0.12);
+    -webkit-text-stroke: 1px rgba(130, 95, 55, 0.32);
+    text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.6),
+        0 0 24px rgba(201, 169, 98, 0.08);
+    opacity: 0.88;
+}
+
+body.planet-body[data-theme="light"] .deity-line {
+    color: rgba(92, 61, 30, 0.52);
+}
+
+body.planet-body[data-theme="light"] .planet-halo {
+    background: radial-gradient(circle, rgba(201, 169, 98, 0.22) 0%, transparent 65%);
+}
+
+body.planet-body[data-theme="light"] .planet-spin-wrap {
+    filter: drop-shadow(0 4px 14px rgba(92, 61, 30, 0.16)) drop-shadow(0 0 22px rgba(201, 169, 98, 0.1));
+}
+
+body.planet-body[data-theme="light"] .sun-home-btn {
+    background: linear-gradient(160deg, rgba(255, 252, 246, 0.98), rgba(232, 214, 188, 0.96));
+    border-color: rgba(130, 95, 55, 0.42);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.55),
+        0 6px 22px rgba(92, 61, 30, 0.12);
+}
+
+body.planet-body[data-theme="light"] .sun-home-btn:hover {
+    border-color: #a67c2c;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.65),
+        0 10px 28px rgba(92, 61, 30, 0.16);
+}
+
+body.planet-body[data-theme="light"] .contract-tease {
+    color: #2c2218;
+    background: linear-gradient(135deg, #f8ebe0 0%, #ecd9cc 50%, #dfcab8 100%);
+    border-color: rgba(139, 105, 40, 0.55);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.45),
+        0 8px 22px rgba(92, 61, 30, 0.14);
+}
+
+body.planet-body[data-theme="light"] .contract-tease-blink {
+    color: #1a1008;
+    background: #d4a524;
+}
+
+body.planet-body[data-theme="light"] .contract-modal__backdrop {
+    background:
+        radial-gradient(ellipse 100% 70% at 50% 50%, rgba(255, 248, 235, 0.35), transparent 55%),
+        linear-gradient(168deg, rgba(42, 34, 28, 0.45) 0%, rgba(28, 22, 18, 0.55) 100%);
+}
+
+body.planet-body[data-theme="light"] .contract-modal__backdrop::before {
+    opacity: 0.22;
+}
+
+body.planet-body[data-theme="light"] * {
+    scrollbar-color: rgba(120, 82, 42, 0.65) rgba(240, 228, 210, 0.88);
+}
+
+body.planet-body[data-theme="light"] *::-webkit-scrollbar-track {
+    background: rgba(236, 224, 204, 0.82);
+    box-shadow: inset 0 0 0 1px rgba(130, 95, 55, 0.14);
+}
+
+body.planet-body[data-theme="light"] *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(201, 169, 98, 0.88), rgba(139, 94, 43, 0.72));
+    border: 2px solid rgba(255, 252, 246, 0.45);
+}
+
+body.planet-body[data-theme="light"] *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(220, 185, 110, 0.92), rgba(100, 68, 32, 0.82));
+}
+
+body.planet-body[data-theme="light"] *::-webkit-scrollbar-corner {
+    background: rgba(236, 224, 204, 0.65);
+}
+
+/* Theme from bridge toggle — dark */
 body.planet-body[data-theme="dark"] {
     color: #d8c9ae;
     /* Single full-viewport stack so wide screens don’t show darker side bars outside max-width. */
@@ -1512,6 +1764,11 @@ body.planet-body[data-theme="dark"] .panel-frame {
 
 body.planet-body[data-theme="dark"] .latin-watermark {
     opacity: 0.1;
+}
+
+body.planet-body[data-theme="dark"] .contract-modal__backdrop {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
 }
 
 /* Scrollbars — imperial / manuscript */

@@ -183,6 +183,26 @@
             who: "Citizen Δ-12",
             stars: 5,
             text: "Brushed against Art. 5 by accident. Felt spiritually invoiced. 10/10."
+        },
+        {
+            who: "Helldiver Δ (desk duty)",
+            stars: 5,
+            text: "Requested orbital drop support. Got a PDF. Liberty achieved, confusion mandatory."
+        },
+        {
+            who: "Tenno-curious intern",
+            stars: 4,
+            text: "Lotus would say something cryptic. Contract just took my lunch stipend. Same energy."
+        },
+        {
+            who: "Traveler #∞ (other save)",
+            stars: 5,
+            text: "Atlas said yes to sixteen ships. Here I only got liability. Immersive downgrade."
+        },
+        {
+            who: "SOLACE-IV · testimonial mode",
+            stars: 1,
+            text: "I am legally barred from endorsing this product. Five stars if you stop reading."
         }
     ];
 
@@ -201,7 +221,11 @@
         { kicker: "Live counter", stat: "∞+", label: "souls in queue" },
         { kicker: "Satisfaction", stat: "98.2%", label: "would sign again*" },
         { kicker: "As seen on", stat: "HOLO", label: "Net (alleged)" },
-        { kicker: "Award", stat: "Ω", label: "Most opaque PDF 2187" }
+        { kicker: "Award", stat: "Ω", label: "Most opaque PDF 2187" },
+        { kicker: "Stratagem uptime", stat: "0%", label: "bread only" },
+        { kicker: "Warframe patch parity", stat: "N/A", label: "you still owe the void" },
+        { kicker: "NMS ship slots", stat: "16", label: "wrong franchise; cope" },
+        { kicker: "Adjunct helpfulness", stat: "−Ω", label: "certified per edict" }
     ];
 
     function esc(s) {
@@ -336,9 +360,9 @@
     tease.setAttribute("aria-haspopup", "dialog");
     tease.innerHTML =
         '<span class="contract-tease-blink">NEW</span> ' +
-        "<span>Wanna go to <strong>" +
+        "<span>Bureau of Hopeless Expeditions — berth lottery for <strong>" +
         esc(name) +
-        "</strong>? · Limited berths · Tap to sign</span>";
+        "</strong>. SOLACE-IV rates your odds “ornamental.” Tap to sign whatever this is.</span>";
 
     var modal = document.createElement("div");
     modal.className = "contract-modal";
@@ -416,7 +440,7 @@
         esc(planet.toUpperCase()) +
         "-Ω</div>" +
         '<h2 id="contract-title" class="contract-modal__title">Pre-departure undertaking</h2>' +
-        '<p class="contract-modal__lede">You are one line away from destiny. Or debt. Press <kbd>Enter</kbd> after each field to “sign” in ink.</p>' +
+        '<p class="contract-modal__lede">You are one line away from destiny. Or debt. Press <kbd>Enter</kbd> after each field to “sign” in ink. The adjunct mind has skimmed this form and recommends panic, then tea.</p>' +
         '<form class="contract-form" id="planet-contract-form">' +
         '<fieldset class="contract-fieldset contract-fieldset--applicant">' +
         "<legend>Applicant — write clearly, regret later</legend>" +
