@@ -56,6 +56,7 @@
                     <button type="button" id="ship-home-btn" class="ship-home-toggle" aria-label="Open astrogation chart on main computer">Home</button>
                     <button type="button" id="ship-registry-btn" class="ship-registry-toggle" aria-label="Open crew registry on main computer">Crew login</button>
                     <button type="button" id="theme-toggle" class="ship-theme-toggle" aria-label="Toggle dark and light mode">Light mode</button>
+                    <button type="button" id="ship-counselor-toggle" class="ship-counselor-toggle" aria-expanded="false" aria-controls="ship-counselor-root" aria-haspopup="dialog">Adjunct mind</button>
                 </span>
             </div>
         </header>
@@ -102,6 +103,8 @@
                 <section class="ship-side-panel is-active" data-panel="home">
                     <h3>Ship’s log</h3>
                     <p>You are not browsing the web. You are seated at the Meridian’s primary console. The parchment charts and contracts are software running on this machine.</p>
+                    <h3>Adjunct notice</h3>
+                    <p><strong>SOLACE-IV</strong> is online, audited, and doctrinally discouraged from straight answers. The header control <em>Adjunct mind</em> summons it without warranty — useful for morale paperwork only.</p>
                     <h3>Nearby</h3>
                     <ul>
                         <li>Fore — observation blister (see viewport arc)</li>
@@ -216,6 +219,43 @@
         </div>
     </div>
 
+    <div id="ship-counselor-root" class="ship-counselor" hidden>
+        <div class="ship-counselor__backdrop" aria-hidden="true"></div>
+        <div
+            class="ship-counselor__sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="ship-counselor-title"
+            tabindex="-1"
+        >
+            <h2 id="ship-counselor-title" class="ship-counselor__title">SOLACE-IV · adjunct mind</h2>
+            <p class="ship-counselor__subtitle">Certified unhelpful assistance · Senate audit pending since 2143</p>
+            <p id="ship-counselor-msg" class="ship-counselor__msg" aria-live="polite"></p>
+            <p id="ship-counselor-meta" class="ship-counselor__meta"></p>
+            <p class="ship-counselor__chips-label">Route grievance by department:</p>
+            <div class="ship-counselor__chips">
+                <button type="button" class="ship-counselor__chip" data-counselor-topic="astro">Charts &amp; stars</button>
+                <button type="button" class="ship-counselor__chip" data-counselor-topic="morale">Morale (defunct)</button>
+                <button type="button" class="ship-counselor__chip" data-counselor-topic="providence">Providence</button>
+            </div>
+            <div class="ship-counselor__actions">
+                <button type="button" id="ship-counselor-again" class="ship-counselor__btn ship-counselor__btn--primary">Another verdict</button>
+                <button
+                    type="button"
+                    id="ship-counselor-close"
+                    class="ship-counselor__btn ship-counselor__btn--exit"
+                    aria-label="Exit and close adjunct mind console"
+                >
+                    <span class="ship-counselor__exit-glyph" aria-hidden="true">✕</span>
+                    <span class="ship-counselor__exit-text">
+                        <span class="ship-counselor__exit-label">Exit console</span>
+                        <span class="ship-counselor__exit-hint">Leave SOLACE-IV · Esc</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="ship-edge-nav" aria-label="Station navigation">
         <button type="button" class="ship-edge-nav__btn ship-edge-nav__btn--left" id="ship-nav-left" aria-label="Previous station">
             ◀
@@ -226,5 +266,6 @@
     </div>
 
     <script src="ship.js" defer></script>
+    <script src="ship-counselor.js" defer></script>
 </body>
 </html>

@@ -187,6 +187,16 @@ header .latin-tag {
     line-height: 1.2;
 }
 
+header .codex-footnote {
+    margin: 0.55rem auto 0;
+    max-width: 34em;
+    padding: 0 0.75rem;
+    font-size: clamp(0.76rem, 1.75vw, 0.9rem);
+    font-style: italic;
+    color: rgba(74, 56, 40, 0.62);
+    line-height: 1.38;
+}
+
 @keyframes codex-parchment-in {
     to { opacity: 1; }
 }
@@ -435,20 +445,57 @@ header .latin-tag {
     opacity: 1;
 }
 
+@media (max-width: 640px) {
+    /* 94vmin force la carte à la petite dimension du viewport (souvent la largeur) :
+       on s’appuie surtout sur la zone utile du stage pour un disque plus grand. */
+    .solar-system {
+        width: min(100cqw, 100cqh, 820px);
+        height: min(100cqw, 100cqh, 820px);
+    }
+
+    .stage-wrap {
+        padding: 0.08rem 0.25rem 0.15rem;
+        padding-left: max(0.25rem, env(safe-area-inset-left, 0px));
+        padding-right: max(0.25rem, env(safe-area-inset-right, 0px));
+    }
+
+    header {
+        padding: max(0.3rem, env(safe-area-inset-top, 0px)) 0.55rem 0.15rem;
+    }
+
+    header p {
+        line-height: 1.32;
+        font-size: clamp(0.9rem, 3.1vw, 1.12rem);
+    }
+
+    header .latin-tag {
+        margin-top: 0.12rem;
+        font-size: clamp(0.62rem, 2.4vw, 0.82rem);
+    }
+
+    /* Planètes un peu plus grosses pour le tactile (transform déjà pris par l’animation). */
+    .planet-link {
+        width: calc(var(--planet-size) * 1.22);
+        height: calc(var(--planet-size) * 1.22);
+        margin-left: calc(var(--planet-size) * 1.22 * -0.5);
+        margin-top: calc(var(--planet-size) * 1.22 * -0.5);
+    }
+
+    .planet-link span {
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        opacity: 0.9;
+    }
+}
+
 @media (max-width: 600px) {
     .planet-link span {
-        font-size: 7px;
         letter-spacing: 0.1em;
     }
 
     .header-ornaments {
         letter-spacing: 1.8em;
         padding-left: 1.8em;
-    }
-
-    .stage-wrap {
-        padding-left: max(0.35rem, env(safe-area-inset-left, 0px));
-        padding-right: max(0.35rem, env(safe-area-inset-right, 0px));
     }
 
     .planet-link {
@@ -560,6 +607,10 @@ body.codex-home[data-theme="dark"] .latin-tag,
 body.codex-home[data-theme="dark"] .planet-link span,
 body.codex-home[data-theme="dark"] .ship-to-bridge {
     color: #e7d6bc;
+}
+
+body.codex-home[data-theme="dark"] .codex-footnote {
+    color: rgba(231, 214, 188, 0.52);
 }
 
 body.codex-home[data-theme="light"] {

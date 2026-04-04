@@ -808,7 +808,7 @@
         <p class="ship-page-ornaments" aria-hidden="true">☙ ❧</p>
         <h1>Rec deck</h1>
         <hr class="ship-page-rule" aria-hidden="true" />
-        <p class="ship-page-lede">Low-stim simulators to waste ship-time. No achievements. No cloud saves. The computer forgives nothing.</p>
+        <p class="ship-page-lede">Low-stim simulators to waste ship-time. No achievements. No cloud saves. The computer forgives nothing. Stratagem requests go to the adjunct mind; it will suggest you “deploy bread” and log Liberty.</p>
         <span class="ship-page-tag">Ludi inter astra</span>
     </header>
 
@@ -981,6 +981,11 @@
             var symbols = ["◆", "●", "▲", "■"];
             var flipped = [];
             var lock = false;
+            var MEM_WIN_LINES = [
+                "Deck clear. The void remains unimpressed.",
+                "Pairs resolved. SOLACE-IV logs ‘statistically lucky’ and withholds praise.",
+                "Board empty. The adjunct would have deployed bread; you deployed memory instead."
+            ];
 
             function build() {
                 grid.innerHTML = "";
@@ -1026,7 +1031,9 @@
                     flipped = [];
                     lock = false;
                     var left = grid.querySelectorAll(".mem-card:not(.is-matched)").length;
-                    if (left === 0) status.textContent = "Deck clear. The void remains unimpressed.";
+                    if (left === 0) {
+                        status.textContent = MEM_WIN_LINES[Math.floor(Math.random() * MEM_WIN_LINES.length)];
+                    }
                 } else {
                     setTimeout(function () {
                         a.classList.remove("is-flipped");

@@ -1230,5 +1230,437 @@ body.ship-bridge *::-webkit-scrollbar-corner {
     .ship-leaderboard > li > strong {
         margin-left: auto;
     }
+
+    .ship-counselor-toggle {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+}
+
+/* —— SOLACE-IV adjunct (unhelpful “AI”) —— */
+.ship-counselor-toggle {
+    padding: 0.28rem 0.55rem;
+    font-family: "Share Tech Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(200, 240, 230, 0.88);
+    background: rgba(8, 40, 48, 0.55);
+    border: 1px solid rgba(120, 220, 200, 0.35);
+    border-radius: 3px;
+    cursor: pointer;
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.ship-counselor-toggle:hover,
+.ship-counselor-toggle:focus-visible {
+    border-color: rgba(160, 255, 235, 0.55);
+    background: rgba(12, 52, 58, 0.72);
+    color: #e8fff8;
+    outline: none;
+}
+
+.ship-counselor-toggle:focus-visible {
+    box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.2);
+}
+
+.ship-counselor {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: max(0.75rem, env(safe-area-inset-bottom, 0px)) max(0.75rem, env(safe-area-inset-right, 0px))
+        max(0.75rem, env(safe-area-inset-bottom, 0px)) max(0.75rem, env(safe-area-inset-left, 0px));
+    pointer-events: none;
+}
+
+.ship-counselor[hidden] {
+    display: none !important;
+}
+
+.ship-counselor__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 10, 0.55);
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ship-counselor--open .ship-counselor__backdrop {
+    opacity: 1;
+}
+
+.ship-counselor__sheet {
+    position: relative;
+    z-index: 1;
+    width: min(26rem, 100%);
+    max-height: min(52vh, 22rem);
+    overflow: auto;
+    pointer-events: auto;
+    padding: 1rem 1.1rem 1.1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #e8dcc8;
+    background: linear-gradient(165deg, rgba(18, 28, 32, 0.96) 0%, rgba(10, 16, 22, 0.98) 100%);
+    border: 1px solid rgba(120, 200, 190, 0.28);
+    border-radius: 6px;
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 18px 50px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(0.97);
+    transform-origin: 50% 100%;
+    pointer-events: none;
+    transition:
+        opacity 0.44s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease,
+        border-color 0.35s ease;
+}
+
+.ship-counselor--open .ship-counselor__sheet {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+}
+
+.ship-counselor__title {
+    margin: 0 0 0.25rem;
+    font-family: Cinzel, serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7dd3c0;
+}
+
+.ship-counselor__subtitle {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: rgba(180, 200, 190, 0.55);
+}
+
+.ship-counselor__msg {
+    margin: 0 0 0.65rem;
+    color: #f0e8d8;
+}
+
+.ship-counselor__meta {
+    margin: 0 0 0.85rem;
+    font-family: "Share Tech Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    color: rgba(140, 190, 175, 0.45);
+}
+
+.ship-counselor__chips-label {
+    margin: 0 0 0.35rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(160, 200, 185, 0.4);
+}
+
+.ship-counselor__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+}
+
+.ship-counselor__chip {
+    padding: 0.35rem 0.55rem;
+    font-family: "Share Tech Mono", ui-monospace, monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(200, 235, 225, 0.85);
+    background: rgba(6, 28, 34, 0.75);
+    border: 1px solid rgba(100, 180, 170, 0.3);
+    border-radius: 3px;
+    cursor: pointer;
+    transition:
+        border-color 0.12s ease,
+        background 0.12s ease;
+}
+
+.ship-counselor__chip:hover,
+.ship-counselor__chip:focus-visible {
+    border-color: rgba(140, 230, 210, 0.5);
+    background: rgba(10, 42, 48, 0.88);
+    outline: none;
+}
+
+.ship-counselor__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    align-items: stretch;
+}
+
+.ship-counselor__btn {
+    padding: 0.4rem 0.75rem;
+    font-family: "Share Tech Mono", ui-monospace, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(220, 240, 230, 0.9);
+    background: rgba(8, 32, 38, 0.8);
+    border: 1px solid rgba(110, 190, 175, 0.35);
+    border-radius: 3px;
+    cursor: pointer;
+    transition:
+        border-color 0.12s ease,
+        background 0.12s ease;
+}
+
+.ship-counselor__btn:hover,
+.ship-counselor__btn:focus-visible {
+    border-color: rgba(160, 240, 220, 0.55);
+    background: rgba(12, 48, 54, 0.92);
+    outline: none;
+}
+
+.ship-counselor__btn--primary {
+    border-color: rgba(215, 178, 106, 0.55);
+    color: #f5e6c8;
+    background: rgba(48, 38, 22, 0.75);
+}
+
+.ship-counselor__btn--primary:hover,
+.ship-counselor__btn--primary:focus-visible {
+    border-color: rgba(232, 200, 120, 0.75);
+    background: rgba(58, 46, 28, 0.88);
+}
+
+/* Exit — visually distinct from “stay and read more” actions */
+.ship-counselor__btn--exit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0.4rem 0.85rem 0.4rem 0.65rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(255, 130, 110, 0.55);
+    color: rgba(255, 220, 210, 0.98);
+    background: linear-gradient(165deg, rgba(72, 28, 24, 0.75) 0%, rgba(38, 14, 12, 0.88) 100%);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(255, 90, 70, 0.12);
+}
+
+.ship-counselor__btn--exit:hover,
+.ship-counselor__btn--exit:focus-visible {
+    border-color: rgba(255, 170, 150, 0.85);
+    color: #fff8f5;
+    background: linear-gradient(165deg, rgba(92, 36, 30, 0.88) 0%, rgba(48, 18, 14, 0.95) 100%);
+    box-shadow:
+        0 0 0 1px rgba(255, 120, 100, 0.25),
+        0 0 28px rgba(255, 100, 80, 0.18);
+    outline: none;
+}
+
+.ship-counselor__btn--exit:focus-visible {
+    box-shadow:
+        0 0 0 3px rgba(255, 120, 100, 0.35),
+        0 0 24px rgba(255, 90, 70, 0.15);
+}
+
+.ship-counselor__exit-glyph {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 700;
+    color: rgba(255, 200, 185, 0.95);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 140, 120, 0.45);
+    border-radius: 4px;
+}
+
+.ship-counselor__exit-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.08rem;
+    text-align: left;
+}
+
+.ship-counselor__exit-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.ship-counselor__exit-hint {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    font-weight: 400;
+    opacity: 0.72;
+    line-height: 1.2;
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__backdrop {
+    background: rgba(42, 36, 30, 0.35);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__sheet {
+    color: #3d2e20;
+    background: linear-gradient(168deg, #fdf9f2 0%, #f0e4d4 55%, #e5d6c4 100%);
+    border-color: rgba(130, 95, 55, 0.35);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.5),
+        0 16px 40px rgba(92, 61, 30, 0.15);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__title {
+    color: #5c3d1e;
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__subtitle {
+    color: rgba(74, 56, 36, 0.6);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__msg {
+    color: #2a2018;
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__meta {
+    color: rgba(92, 61, 30, 0.5);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__chips-label {
+    color: rgba(92, 61, 30, 0.45);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__chip {
+    color: #3d2914;
+    background: rgba(255, 252, 246, 0.85);
+    border-color: rgba(130, 95, 55, 0.35);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__chip:hover,
+body.ship-bridge[data-theme="light"] .ship-counselor__chip:focus-visible {
+    background: #fffefb;
+    border-color: rgba(139, 105, 40, 0.55);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn {
+    color: #3d2914;
+    background: rgba(252, 248, 238, 0.95);
+    border-color: rgba(130, 95, 55, 0.4);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn:hover,
+body.ship-bridge[data-theme="light"] .ship-counselor__btn:focus-visible {
+    background: #fffefb;
+    border-color: rgba(92, 61, 30, 0.55);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn--primary {
+    color: #2a1810;
+    background: rgba(232, 200, 130, 0.45);
+    border-color: rgba(139, 105, 40, 0.55);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn--exit {
+    color: #3d1814;
+    border-color: rgba(180, 72, 58, 0.65);
+    background: linear-gradient(168deg, #fde8e4 0%, #f5d4ce 45%, #ebc4bc 100%);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.55),
+        0 4px 14px rgba(120, 48, 40, 0.12);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn--exit:hover,
+body.ship-bridge[data-theme="light"] .ship-counselor__btn--exit:focus-visible {
+    color: #2a100c;
+    border-color: rgba(160, 58, 48, 0.85);
+    background: linear-gradient(168deg, #fff5f2 0%, #fad8d2 50%, #f0c8c0 100%);
+    box-shadow:
+        0 0 0 2px rgba(200, 80, 65, 0.2),
+        0 6px 18px rgba(100, 40, 32, 0.14);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__btn--exit:focus-visible {
+    box-shadow:
+        0 0 0 3px rgba(200, 80, 65, 0.28),
+        0 4px 16px rgba(100, 40, 32, 0.12);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__exit-glyph {
+    color: #6b2820;
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(180, 72, 58, 0.45);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor__exit-hint {
+    color: rgba(60, 36, 32, 0.75);
+    opacity: 1;
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor-toggle {
+    color: #3d2914;
+    background: rgba(252, 248, 238, 0.92);
+    border-color: rgba(130, 95, 55, 0.4);
+}
+
+body.ship-bridge[data-theme="light"] .ship-counselor-toggle:hover,
+body.ship-bridge[data-theme="light"] .ship-counselor-toggle:focus-visible {
+    border-color: rgba(92, 61, 30, 0.55);
+    background: #fffefb;
+    color: #1a140c;
+}
+
+@media (min-width: 640px) {
+    .ship-counselor {
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    }
+
+    .ship-counselor__sheet {
+        width: min(22rem, calc(100vw - 2rem));
+        max-height: min(70vh, 28rem);
+        margin-right: 0;
+        margin-left: 0;
+        transform: translate3d(28px, 10px, 0) scale(0.96);
+        transform-origin: 100% 50%;
+    }
+
+    .ship-counselor--open .ship-counselor__sheet {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ship-counselor__backdrop,
+    .ship-counselor__sheet {
+        transition-duration: 0.01ms !important;
+    }
 }
 
